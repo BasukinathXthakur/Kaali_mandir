@@ -56,17 +56,20 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
   try {
+    console.log('Login attempt:', req.body.email);
     const { email, password } = req.body;
 
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('Login failed: User not found');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log('Login failed: Invalid password');
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -77,6 +80,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: '1d' }
     );
 
+    console.log('Login successful:', user.email);
     res.json({
       token,
       user: {
@@ -87,7 +91,7 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error(error);
+    console.error('Server error during login:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

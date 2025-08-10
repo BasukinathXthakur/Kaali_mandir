@@ -2,17 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaPlus, FaEdit, FaTrash, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaRupeeSign } from 'react-icons/fa';
 import { db } from '../../services/firebase';
-import { 
-  collection, 
-  addDoc, 
-  doc, 
-  updateDoc, 
-  deleteDoc, 
-  query, 
-  orderBy, 
-  getDocs, 
-  serverTimestamp 
-} from 'firebase/firestore';
+import axios from 'axios';
+
+const API_URL = 'https://localhost:5000/events'; // Replace with your API URL
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -39,22 +31,8 @@ const EventManagement = () => {
 
   const fetchEvents = async () => {
     try {
-      const eventsRef = collection(db, 'events');
-      const q = query(eventsRef, orderBy('date', 'desc'));
-      const querySnapshot = await getDocs(q);
-      
-      const eventsList = [];
-      
-      querySnapshot.forEach((doc) => {
-        const eventData = doc.data();
-        eventsList.push({
-          id: doc.id,
-          ...eventData,
-          date: eventData.date?.toDate() || new Date()
-        });
-      });
-      
-      setEvents(eventsList);
+      const res = await axios.get(API_URL);
+      setEvents(res.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -122,32 +100,22 @@ const EventManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
-    
-    // Validation
     if (!formData.name || !formData.date) {
       setFormError('Event name and date are required');
       return;
     }
-    
     try {
       const eventData = {
         ...formData,
         date: new Date(formData.date),
         price: Number(formData.price) || 0,
         capacity: Number(formData.capacity) || 0,
-        updatedAt: serverTimestamp()
       };
-      
       if (isEditing && currentEventId) {
-        // Update existing event
-        const eventRef = doc(db, 'events', currentEventId);
-        await updateDoc(eventRef, eventData);
+        await axios.put(`${API_URL}/${currentEventId}`, eventData);
       } else {
-        // Add new event
-        eventData.createdAt = serverTimestamp();
-        await addDoc(collection(db, 'events'), eventData);
+        await axios.post(API_URL, eventData);
       }
-      
       handleCloseModal();
       fetchEvents();
     } catch (error) {
@@ -157,16 +125,12 @@ const EventManagement = () => {
   };
 
   const handleDeleteEvent = async (eventId) => {
-    if (!window.confirm('Are you sure you want to delete this event?')) {
-      return;
-    }
-    
+    if (!window.confirm('Are you sure you want to delete this event?')) return;
     try {
-      await deleteDoc(doc(db, 'events', eventId));
+      await axios.delete(`${API_URL}/${eventId}`);
       fetchEvents();
     } catch (error) {
       console.error('Error deleting event:', error);
-      alert('Failed to delete event. Please try again.');
     }
   };
 

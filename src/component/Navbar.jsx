@@ -9,16 +9,12 @@ import { logoutUser } from "../services/authService";
 export default function Navbar() {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { currentUser, isAdmin } = useAuth();
+  const { currentUser, isAdmin, loading, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      navigate("/");
-    } catch (error) {
-      console.error("Failed to log out", error);
-    }
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -93,7 +89,7 @@ export default function Navbar() {
                 {currentUser ? (
                   <>
                     <div className="block px-4 py-2 text-sm text-gray-700 border-b">
-                      {currentUser.displayName || currentUser.email}
+                      {currentUser.name || currentUser.email}
                     </div>
                     {isAdmin && (
                       <Link to="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

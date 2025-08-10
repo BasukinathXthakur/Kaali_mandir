@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { registerUser, loginUser } from '../services/authService';
+import { useAuth } from '../contexts/AuthContext';
+
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,18 +26,16 @@ const Auth = () => {
     }));
   };
 
+  const { loginUser, registerUser } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
     try {
       if (isLogin) {
-        // Login
         await loginUser(formData.email, formData.password);
         navigate('/');
       } else {
-        // Register
         await registerUser(formData.name, formData.email, formData.password, formData.phone);
         navigate('/');
       }

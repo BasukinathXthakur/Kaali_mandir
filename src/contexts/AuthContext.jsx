@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getCurrentUser, getToken } from '../services/authService';
+import { getCurrentUser, getToken, loginUser as login, registerUser as register } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -23,10 +23,34 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  // Add login function
+  const loginUser = async (email, password) => {
+    const user = await login(email, password);
+    setCurrentUser(user);
+    return user;
+  };
+
+  // Add register function
+  const registerUser = async (name, email, password, phone) => {
+    const user = await register(name, email, password, phone);
+    setCurrentUser(user);
+    return user;
+  };
+
+  // Add logout function
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+  };
+
   const value = {
     currentUser,
     isAdmin: currentUser?.role === 'admin',
-    loading
+    loading,
+    loginUser,
+    registerUser,
+    logout
   };
 
   return (
