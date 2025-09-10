@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaCalendarAlt, FaHandHoldingHeart } from 'react-icons/fa';
+import { Calendar, Heart, BookOpen, Music, Building2, Users, MapPin, DollarSign, HandHeart, Clock } from 'lucide-react';
 import { db } from '../services/firebase';
 import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 
@@ -93,20 +93,20 @@ const Home = () => {
           style={{ backgroundImage: "url('/src/assets/temple-banner.jpg')" }}
         ></div>
         <div className="relative container mx-auto px-4 py-32 flex flex-col items-center justify-center text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to Kaali Mandir</h1>
-          <p className="text-xl md:text-2xl mb-8">A sacred place for spiritual enlightenment and divine blessings</p>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 font-devanagari">Welcome to Kaali Mandir</h1>
+          <p className="text-xl md:text-2xl mb-8">Your Temple, Anytime, Anywhere</p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link 
-              to="/events" 
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              to="/pujas" 
+              className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg"
             >
-              Explore Events
+              Book a Puja
             </Link>
             <Link 
-              to="/donations" 
-              className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors"
+              to="/community" 
+              className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors shadow-lg border-2 border-orange-600"
             >
-              Make a Donation
+              Join Community
             </Link>
           </div>
         </div>
@@ -144,11 +144,83 @@ const Home = () => {
         </div>
       )}
 
-      {/* Upcoming Events Section */}
+      {/* Quick Access Cards */}
       <div className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Upcoming Events</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">Divine Services</h2>
+            <p className="text-gray-600">Connect with your spiritual journey through our offerings</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+            <Link to="/pujas" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <HandHeart className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Book Puja & Chadhava</h3>
+              <p className="text-sm text-gray-600">Schedule sacred rituals</p>
+            </Link>
+            
+            <Link to="/panchang" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <Clock className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Panchang & Horoscope</h3>
+              <p className="text-sm text-gray-600">Daily astrological guidance</p>
+            </Link>
+            
+            <Link to="/music" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <Music className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Devotional Music</h3>
+              <p className="text-sm text-gray-600">Sacred bhajans and mantras</p>
+            </Link>
+            
+            <Link to="/literature" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <BookOpen className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Hindu Literature</h3>
+              <p className="text-sm text-gray-600">Ancient wisdom & scriptures</p>
+            </Link>
+            
+            <Link to="/virtual-temple" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <Building2 className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Divine Temple</h3>
+              <p className="text-sm text-gray-600">Virtual mandir experience</p>
+            </Link>
+            
+            <Link to="/community" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <Users className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Sanatani Community</h3>
+              <p className="text-sm text-gray-600">Connect with devotees</p>
+            </Link>
+            
+            <Link to="/yatra" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <MapPin className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Yatra & Darshan</h3>
+              <p className="text-sm text-gray-600">Pilgrimage journeys</p>
+            </Link>
+            
+            <Link to="/donations" className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-all hover:-translate-y-1 flex flex-col items-center text-center">
+              <div className="bg-orange-600 text-white p-3 rounded-full mb-4">
+                <DollarSign className="text-2xl" />
+              </div>
+              <h3 className="font-bold text-gray-800 mb-1">Chanda & Donations</h3>
+              <p className="text-sm text-gray-600">Support temple activities</p>
+            </Link>
+          </div>
+          
+          {/* Upcoming Events Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">Upcoming Events</h2>
             <p className="text-gray-600">Join us for these sacred ceremonies and celebrations</p>
           </div>
           
@@ -165,7 +237,7 @@ const Home = () => {
                       <img src={event.imageUrl} alt={event.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-orange-100">
-                        <FaCalendarAlt className="text-5xl text-orange-500" />
+                        <Calendar className="text-5xl text-orange-500" />
                       </div>
                     )}
                     <div className="absolute top-0 right-0 bg-orange-500 text-white py-1 px-3 rounded-bl-lg">
@@ -206,7 +278,7 @@ const Home = () => {
       <div className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <FaHandHoldingHeart className="text-5xl text-orange-500 mx-auto mb-4" />
+            <Heart className="text-5xl text-orange-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Support Our Temple</h2>
             <p className="text-gray-600 mb-8">
               Your generous donations help us maintain the temple, organize religious ceremonies, and serve the community.

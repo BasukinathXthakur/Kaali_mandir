@@ -1,7 +1,28 @@
 import express from 'express';
 import Event from '../../src/models/Event.js';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
+
+// Upload image endpoint
+router.post('/upload-image', upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No image file provided' });
+    }
+
+    // Return the file path that can be used as image URL
+    const imageUrl = `/uploads/events/${req.file.filename}`;
+    res.json({
+      message: 'Image uploaded successfully',
+      imageUrl: imageUrl,
+      filename: req.file.filename
+    });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({ message: 'Failed to upload image' });
+  }
+});
 
 // Get all events
 router.get('/', async (req, res) => {

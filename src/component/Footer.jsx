@@ -1,30 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaPrayingHands, FaOm } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white pt-10 pb-5">
+    <footer className="bg-gradient-to-b from-orange-900 to-gray-900 text-white pt-10 pb-5">
       <div className="container mx-auto px-4">
+        {/* Om Symbol */}
+        <div className="flex justify-center mb-8">
+          <div className="bg-orange-600 text-white p-4 rounded-full inline-block">
+            <FaOm size={32} />
+          </div>
+        </div>
+        
+        {/* Decorative Border */}
+        <div className="flex justify-center mb-8">
+          <div className="w-full max-w-md h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Kaali Mandir</h3>
-            <p className="text-gray-400 mb-4">
-              A sacred place dedicated to Goddess Kali, offering spiritual guidance and community services.
+            <h3 className="text-xl font-devanagari text-orange-500 mb-4">Kaali Mandir</h3>
+            <p className="text-gray-300 mb-4">
+              A sacred place dedicated to Goddess Kali, offering spiritual guidance, divine rituals, and community services for devotees worldwide.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
                 <FaFacebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
                 <FaTwitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
                 <FaInstagram size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
                 <FaYoutube size={20} />
+              </a>
+              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+                <FaWhatsapp size={20} />
               </a>
             </div>
           </div>

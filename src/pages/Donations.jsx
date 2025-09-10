@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaRupeeSign, FaUser, FaPhone, FaEnvelope, FaCheckCircle } from 'react-icons/fa';
+import { FaRupeeSign, FaUser, FaPhone, FaEnvelope, FaCheckCircle, FaAddressBook } from 'react-icons/fa';
 import { db } from '../services/firebase';
 import { collection, addDoc, query, orderBy, getDocs, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
@@ -200,7 +200,44 @@ const Donations = () => {
                       />
                     </div>
                   </div>
-                  
+                  <div className="mb-4">
+                    <label htmlFor="email" className="block text-gray-700 font-medium mb-1">Father name</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FaUser className="text-gray-400" />
+                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.fatherName}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        placeholder="Father Name"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <label htmlFor="email" className="block text-gray-700 font-medium mb-1">Address</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FaAddressBook className="text-gray-400" />
+                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.address}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        placeholder="Enter Village Name"
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div className="mb-4">
                     <label htmlFor="amount" className="block text-gray-700 font-medium mb-1">Donation Amount (₹)</label>
                     <div className="relative">
@@ -235,7 +272,7 @@ const Donations = () => {
                         <option value="upi">UPI</option>
                         <option value="card">Credit/Debit Card</option>
                         <option value="netbanking">Net Banking</option>
-                        <option value="wallet">Digital Wallet</option>
+                        <option value="wallet">Cash</option>
                       </select>
                     </div>
                     
@@ -250,7 +287,7 @@ const Donations = () => {
                         required
                       >
                         <option value="general">General Donation</option>
-                        <option value="puja">Puja Services</option>
+                        <option value="puja">Puja chanda</option>
                         <option value="construction">Temple Construction</option>
                         <option value="charity">Charity & Community Service</option>
                         <option value="festival">Festival Celebration</option>

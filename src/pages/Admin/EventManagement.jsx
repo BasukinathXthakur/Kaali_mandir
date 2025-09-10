@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaPlus, FaEdit, FaTrash, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaRupeeSign } from 'react-icons/fa';
 import { db } from '../../services/firebase';
 import axios from 'axios';
 
-const API_URL = 'https://localhost:5000/events'; // Replace with your API URL
+const API_URL = 'http://localhost:5000/api/events'; // Backend API URL
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -23,6 +24,9 @@ const EventManagement = () => {
     image: ''
   });
   const [formError, setFormError] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   // Fetch events
   useEffect(() => {
@@ -48,6 +52,42 @@ const EventManagement = () => {
     }));
   };
 
+  // File upload functionality
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadImage = async () => {
+    if (!selectedFile) return null;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+
+    try {
+      const response = await axios.post(`${API_URL}/upload-image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data.imageUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw new Error('Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       name: '',
@@ -62,6 +102,9 @@ const EventManagement = () => {
     setFormError('');
     setIsEditing(false);
     setCurrentEventId(null);
+    setSelectedFile(null);
+    setImagePreview('');
+    setUploading(false);
   };
 
   const handleOpenModal = (event = null) => {
@@ -87,6 +130,11 @@ const EventManagement = () => {
         capacity: event.capacity || '',
         image: event.image || ''
       });
+
+      // Set image preview if editing and image exists
+      if (event.image) {
+        setImagePreview(event.image.startsWith('http') ? event.image : `http://localhost:5000${event.image}`);
+      }
     }
     
     setIsModalOpen(true);
@@ -100,17 +148,40 @@ const EventManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
-    if (!formData.name || !formData.date) {
-      setFormError('Event name and date are required');
+
+    // Enhanced validation
+    if (!formData.name?.trim()) {
+      setFormError('Event name is required');
       return;
     }
+    if (!formData.date) {
+      setFormError('Event date is required');
+      return;
+    }
+    if (!formData.location?.trim()) {
+      setFormError('Event location is required');
+      return;
+    }
+
     try {
+      let imageUrl = formData.image;
+
+      // Upload new image if file is selected
+      if (selectedFile) {
+        imageUrl = await uploadImage();
+      }
+
       const eventData = {
         ...formData,
+        name: formData.name.trim(),
+        description: formData.description?.trim() || '',
+        location: formData.location.trim(),
         date: new Date(formData.date),
         price: Number(formData.price) || 0,
         capacity: Number(formData.capacity) || 0,
+        image: imageUrl
       };
+
       if (isEditing && currentEventId) {
         await axios.put(`${API_URL}/${currentEventId}`, eventData);
       } else {
@@ -120,7 +191,8 @@ const EventManagement = () => {
       fetchEvents();
     } catch (error) {
       console.error('Error saving event:', error);
-      setFormError('Failed to save event. Please try again.');
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to save event. Please try again.';
+      setFormError(errorMessage);
     }
   };
 
@@ -328,15 +400,45 @@ const EventManagement = () => {
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Image URL</label>
-                  <input
-                    type="text"
-                    name="image"
-                    value={formData.image}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2"
-                    placeholder="https://example.com/image.jpg"
-                  />
+                  <label className="block text-gray-700 mb-2">Event Image</label>
+
+                  {/* File Upload */}
+                  <div className="mb-3">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      Upload an image from your device (max 5MB)
+                    </p>
+                  </div>
+
+                  {/* Image Preview */}
+                  {imagePreview && (
+                    <div className="mb-3">
+                      <label className="block text-gray-700 mb-2">Preview:</label>
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-32 h-32 object-cover rounded-md border"
+                      />
+                    </div>
+                  )}
+
+                  {/* Alternative: Image URL */}
+                  <div className="border-t pt-3">
+                    <label className="block text-gray-700 mb-2">Or enter image URL:</label>
+                    <input
+                      type="text"
+                      name="image"
+                      value={formData.image}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      placeholder="https://example.com/image.jpg"
+                    />
+                  </div>
                 </div>
                 
                 <div className="flex justify-end space-x-3">
@@ -349,9 +451,10 @@ const EventManagement = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+                    disabled={uploading}
+                    className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    {isEditing ? 'Update Event' : 'Create Event'}
+                    {uploading ? 'Uploading...' : (isEditing ? 'Update Event' : 'Create Event')}
                   </button>
                 </div>
               </form>

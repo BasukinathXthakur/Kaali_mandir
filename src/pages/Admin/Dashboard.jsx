@@ -14,33 +14,50 @@ const Dashboard = () => {
   const [recentDonations, setRecentDonations] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        
-        // Fetch events stats
-        const eventsRef = collection(db, 'events');
-        const eventsSnapshot = await getDocs(eventsRef);
+
+        // Execute all queries in parallel for better performance
+        const [
+          eventsSnapshot,
+          upcomingEventsSnapshot,
+          upcomingEventsListSnapshot,
+          donationsSnapshot,
+          recentDonationsSnapshot,
+          usersSnapshot
+        ] = await Promise.all([
+          // All events
+          getDocs(collection(db, 'events')),
+          // Upcoming events count
+          getDocs(query(collection(db, 'events'), where('date', '>=', today))),
+          // Upcoming events list
+          getDocs(query(
+            collection(db, 'events'),
+            where('date', '>=', today),
+            orderBy('date', 'asc'),
+            limit(5)
+          )),
+          // All donations
+          getDocs(collection(db, 'donations')),
+          // Recent donations
+          getDocs(query(
+            collection(db, 'donations'),
+            orderBy('timestamp', 'desc'),
+            limit(5)
+          )),
+          // All users
+          getDocs(collection(db, 'users'))
+        ]);
+
+        // Process events data
         const totalEvents = eventsSnapshot.size;
-        
-        const upcomingEventsQuery = query(
-          eventsRef,
-          where('date', '>=', today)
-        );
-        const upcomingEventsSnapshot = await getDocs(upcomingEventsQuery);
         const upcomingEventsCount = upcomingEventsSnapshot.size;
-        
-        // Fetch upcoming events for display
-        const upcomingEventsListQuery = query(
-          eventsRef,
-          where('date', '>=', today),
-          orderBy('date', 'asc'),
-          limit(5)
-        );
-        const upcomingEventsListSnapshot = await getDocs(upcomingEventsListQuery);
+
         const upcomingEventsList = [];
         upcomingEventsListSnapshot.forEach((doc) => {
           upcomingEventsList.push({
@@ -49,22 +66,13 @@ const Dashboard = () => {
             date: doc.data().date.toDate()
           });
         });
-        
-        // Fetch donations stats
-        const donationsRef = collection(db, 'donations');
-        const donationsSnapshot = await getDocs(donationsRef);
+
+        // Process donations data
         let totalDonationAmount = 0;
         donationsSnapshot.forEach((doc) => {
           totalDonationAmount += Number(doc.data().amount);
         });
-        
-        // Fetch recent donations for display
-        const recentDonationsQuery = query(
-          donationsRef,
-          orderBy('timestamp', 'desc'),
-          limit(5)
-        );
-        const recentDonationsSnapshot = await getDocs(recentDonationsQuery);
+
         const recentDonationsList = [];
         recentDonationsSnapshot.forEach((doc) => {
           recentDonationsList.push({
@@ -73,12 +81,10 @@ const Dashboard = () => {
             timestamp: doc.data().timestamp?.toDate() || new Date()
           });
         });
-        
-        // Fetch users stats
-        const usersRef = collection(db, 'users');
-        const usersSnapshot = await getDocs(usersRef);
+
+        // Process users data
         const totalUsers = usersSnapshot.size;
-        
+
         // Update state
         setStats({
           totalEvents,
@@ -91,10 +97,11 @@ const Dashboard = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        setError('Failed to load dashboard data. Please try again.');
         setLoading(false);
       }
     };
-    
+
     fetchDashboardData();
   }, []);
 
@@ -114,6 +121,19 @@ const Dashboard = () => {
         {loading ? (
           <div className="flex justify-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+          </div>
+        ) : error ? (
+          <div className="flex justify-center py-20">
+            <div className="text-center">
+              <div className="text-red-500 text-xl mb-4">⚠️</div>
+              <p className="text-red-600 mb-4">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+              >
+                Retry
+              </button>
+            </div>
           </div>
         ) : (
           <>
