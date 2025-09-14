@@ -1,5 +1,10 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { getCurrentUser, getToken, loginUser as login, registerUser as register } from '../services/authService';
+import { createContext, useContext, useState, useEffect } from "react";
+import {
+  getCurrentUser,
+  getToken,
+  loginUser as login,
+  registerUser as register,
+} from "../../server/services/authService";
 
 const AuthContext = createContext();
 
@@ -15,11 +20,11 @@ export const AuthProvider = ({ children }) => {
     // Check if user is logged in
     const user = getCurrentUser();
     const token = getToken();
-    
+
     if (user && token) {
       setCurrentUser(user);
     }
-    
+
     setLoading(false);
   }, []);
 
@@ -39,18 +44,18 @@ export const AuthProvider = ({ children }) => {
 
   // Add logout function
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setCurrentUser(null);
   };
 
   const value = {
     currentUser,
-    isAdmin: currentUser?.role === 'admin',
+    isAdmin: currentUser?.role === "admin",
     loading,
     loginUser,
     registerUser,
-    logout
+    logout,
   };
 
   return (

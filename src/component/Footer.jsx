@@ -1,8 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaPrayingHands, FaOm } from 'react-icons/fa';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaYoutube,
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaWhatsapp,
+  FaPrayingHands,
+  FaOm,
+} from "react-icons/fa";
+import { useTranslation } from "../hooks/useTranslation";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-gradient-to-b from-orange-900 to-gray-900 text-white pt-10 pb-5">
       <div className="container mx-auto px-4">
@@ -12,33 +26,48 @@ const Footer = () => {
             <FaOm size={32} />
           </div>
         </div>
-        
+
         {/* Decorative Border */}
         <div className="flex justify-center mb-8">
           <div className="w-full max-w-md h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-devanagari text-orange-500 mb-4">Kaali Mandir</h3>
-            <p className="text-gray-300 mb-4">
-              A sacred place dedicated to Goddess Kali, offering spiritual guidance, divine rituals, and community services for devotees worldwide.
-            </p>
+            <h3 className="text-xl font-devanagari text-orange-500 mb-4">
+              Kaali Mandir
+            </h3>
+            <p className="text-gray-300 mb-4">{t("footerAbout")}</p>
             <div className="flex space-x-4">
-              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+              <a
+                href="#"
+                className="text-orange-500 hover:text-orange-300 transition-colors"
+              >
                 <FaFacebook size={20} />
               </a>
-              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+              <a
+                href="#"
+                className="text-orange-500 hover:text-orange-300 transition-colors"
+              >
                 <FaTwitter size={20} />
               </a>
-              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+              <a
+                href="#"
+                className="text-orange-500 hover:text-orange-300 transition-colors"
+              >
                 <FaInstagram size={20} />
               </a>
-              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+              <a
+                href="#"
+                className="text-orange-500 hover:text-orange-300 transition-colors"
+              >
                 <FaYoutube size={20} />
               </a>
-              <a href="#" className="text-orange-500 hover:text-orange-300 transition-colors">
+              <a
+                href="#"
+                className="text-orange-500 hover:text-orange-300 transition-colors"
+              >
                 <FaWhatsapp size={20} />
               </a>
             </div>
@@ -46,26 +75,38 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-xl font-semibold mb-4">{t("quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
-                  Home
+                <Link
+                  to="/"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("home")}
                 </Link>
               </li>
               <li>
-                <Link to="/events" className="text-gray-400 hover:text-white transition-colors">
-                  Events
+                <Link
+                  to="/events"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("events")}
                 </Link>
               </li>
               <li>
-                <Link to="/donations" className="text-gray-400 hover:text-white transition-colors">
-                  Donations
+                <Link
+                  to="/donations"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("donations")}
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Gallery
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("gallery")}
                 </a>
               </li>
             </ul>
@@ -73,26 +114,40 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Services</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {t("footerServices")}
+            </h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Puja Services
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("pujaServices")}
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Hawan
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("hawan")}
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Marriage Ceremonies
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("marriageCeremonies")}
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Spiritual Guidance
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("spiritualGuidance")}
                 </a>
               </li>
             </ul>
@@ -100,7 +155,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-xl font-semibold mb-4">{t("contactUs")}</h3>
             <ul className="space-y-2">
               <li className="flex items-center space-x-2">
                 <FaPhone className="text-gray-400" />
@@ -112,28 +167,19 @@ const Footer = () => {
               </li>
               <li className="flex items-start space-x-2">
                 <FaMapMarkerAlt className="text-gray-400 mt-1" />
-                <span className="text-gray-400">123 Temple Street, Spiritual City, India - 110001</span>
+                <span className="text-gray-400">
+                  123 Temple Street, Spiritual City, India - 110001
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Google Maps */}
-        <div className="mt-8 rounded-lg overflow-hidden">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.2536900776364!2d77.20659841508096!3d28.56270198244407!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce26f903969d7%3A0x8f66310952faaa!2sKali%20Mandir!5e0!3m2!1sen!2sin!4v1628498744383!5m2!1sen!2sin" 
-            width="100%" 
-            height="200" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy"
-            title="Temple Location"
-          ></iframe>
-        </div>
-
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-5 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Kaali Mandir. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Kaali Mandir. {t("copyright")}
+          </p>
         </div>
       </div>
     </footer>

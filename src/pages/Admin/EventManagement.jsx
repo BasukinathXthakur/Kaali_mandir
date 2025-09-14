@@ -1,11 +1,18 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  FaPlus,
+  FaEdit,
+  FaTrash,
+  FaCalendarAlt,
+  FaClock,
+  FaMapMarkerAlt,
+  FaRupeeSign,
+} from "react-icons/fa";
+import { db } from "../../../server/services/firebase";
+import axios from "axios";
 
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaPlus, FaEdit, FaTrash, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaRupeeSign } from 'react-icons/fa';
-import { db } from '../../services/firebase';
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api/events'; // Backend API URL
+const API_URL = "http://localhost:5000/api/events"; // Backend API URL
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
@@ -14,18 +21,18 @@ const EventManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentEventId, setCurrentEventId] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    date: '',
-    time: '',
-    location: '',
-    price: '',
-    capacity: '',
-    image: ''
+    name: "",
+    description: "",
+    date: "",
+    time: "",
+    location: "",
+    price: "",
+    capacity: "",
+    image: "",
   });
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imagePreview, setImagePreview] = useState("");
   const [uploading, setUploading] = useState(false);
 
   // Fetch events
@@ -39,16 +46,16 @@ const EventManagement = () => {
       setEvents(res.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error("Error fetching events:", error);
       setLoading(false);
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -71,18 +78,18 @@ const EventManagement = () => {
 
     setUploading(true);
     const formData = new FormData();
-    formData.append('image', selectedFile);
+    formData.append("image", selectedFile);
 
     try {
       const response = await axios.post(`${API_URL}/upload-image`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       return response.data.imageUrl;
     } catch (error) {
-      console.error('Error uploading image:', error);
-      throw new Error('Failed to upload image');
+      console.error("Error uploading image:", error);
+      throw new Error("Failed to upload image");
     } finally {
       setUploading(false);
     }
@@ -90,53 +97,58 @@ const EventManagement = () => {
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      description: '',
-      date: '',
-      time: '',
-      location: '',
-      price: '',
-      capacity: '',
-      image: ''
+      name: "",
+      description: "",
+      date: "",
+      time: "",
+      location: "",
+      price: "",
+      capacity: "",
+      image: "",
     });
-    setFormError('');
+    setFormError("");
     setIsEditing(false);
     setCurrentEventId(null);
     setSelectedFile(null);
-    setImagePreview('');
+    setImagePreview("");
     setUploading(false);
   };
 
   const handleOpenModal = (event = null) => {
     resetForm();
-    
+
     if (event) {
       // Edit mode
       setIsEditing(true);
       setCurrentEventId(event.id);
-      
+
       // Format date for input field
-      const formattedDate = event.date instanceof Date 
-        ? event.date.toISOString().split('T')[0] 
-        : '';
-      
+      const formattedDate =
+        event.date instanceof Date
+          ? event.date.toISOString().split("T")[0]
+          : "";
+
       setFormData({
-        name: event.name || '',
-        description: event.description || '',
+        name: event.name || "",
+        description: event.description || "",
         date: formattedDate,
-        time: event.time || '',
-        location: event.location || '',
-        price: event.price || '',
-        capacity: event.capacity || '',
-        image: event.image || ''
+        time: event.time || "",
+        location: event.location || "",
+        price: event.price || "",
+        capacity: event.capacity || "",
+        image: event.image || "",
       });
 
       // Set image preview if editing and image exists
       if (event.image) {
-        setImagePreview(event.image.startsWith('http') ? event.image : `http://localhost:5000${event.image}`);
+        setImagePreview(
+          event.image.startsWith("http")
+            ? event.image
+            : `http://localhost:5000${event.image}`
+        );
       }
     }
-    
+
     setIsModalOpen(true);
   };
 
@@ -147,19 +159,19 @@ const EventManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormError('');
+    setFormError("");
 
     // Enhanced validation
     if (!formData.name?.trim()) {
-      setFormError('Event name is required');
+      setFormError("Event name is required");
       return;
     }
     if (!formData.date) {
-      setFormError('Event date is required');
+      setFormError("Event date is required");
       return;
     }
     if (!formData.location?.trim()) {
-      setFormError('Event location is required');
+      setFormError("Event location is required");
       return;
     }
 
@@ -174,12 +186,12 @@ const EventManagement = () => {
       const eventData = {
         ...formData,
         name: formData.name.trim(),
-        description: formData.description?.trim() || '',
+        description: formData.description?.trim() || "",
         location: formData.location.trim(),
         date: new Date(formData.date),
         price: Number(formData.price) || 0,
         capacity: Number(formData.capacity) || 0,
-        image: imageUrl
+        image: imageUrl,
       };
 
       if (isEditing && currentEventId) {
@@ -190,30 +202,33 @@ const EventManagement = () => {
       handleCloseModal();
       fetchEvents();
     } catch (error) {
-      console.error('Error saving event:', error);
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to save event. Please try again.';
+      console.error("Error saving event:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to save event. Please try again.";
       setFormError(errorMessage);
     }
   };
 
   const handleDeleteEvent = async (eventId) => {
-    if (!window.confirm('Are you sure you want to delete this event?')) return;
+    if (!window.confirm("Are you sure you want to delete this event?")) return;
     try {
       await axios.delete(`${API_URL}/${eventId}`);
       fetchEvents();
     } catch (error) {
-      console.error('Error deleting event:', error);
+      console.error("Error deleting event:", error);
     }
   };
 
   const formatDate = (date) => {
-    return date instanceof Date 
-      ? date.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
+    return date instanceof Date
+      ? date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
         })
-      : 'Invalid date';
+      : "Invalid date";
   };
 
   if (loading) {
@@ -240,12 +255,17 @@ const EventManagement = () => {
 
       {events.length === 0 ? (
         <div className="bg-white rounded-lg shadow-md p-6 text-center">
-          <p className="text-gray-500">No events found. Create your first event!</p>
+          <p className="text-gray-500">
+            No events found. Create your first event!
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {events.map((event) => (
-            <div key={event.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div
+              key={event.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
               <div className="p-6">
                 <div className="flex justify-between items-start">
                   <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
@@ -264,29 +284,29 @@ const EventManagement = () => {
                     </button>
                   </div>
                 </div>
-                
+
                 <p className="text-gray-600 mb-4">{event.description}</p>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-center text-gray-600">
                     <FaCalendarAlt className="mr-2 text-orange-500" />
                     {formatDate(event.date)}
                   </div>
-                  
+
                   {event.time && (
                     <div className="flex items-center text-gray-600">
                       <FaClock className="mr-2 text-orange-500" />
                       {event.time}
                     </div>
                   )}
-                  
+
                   {event.location && (
                     <div className="flex items-center text-gray-600">
                       <FaMapMarkerAlt className="mr-2 text-orange-500" />
                       {event.location}
                     </div>
                   )}
-                  
+
                   {event.price > 0 && (
                     <div className="flex items-center text-gray-600">
                       <FaRupeeSign className="mr-2 text-orange-500" />
@@ -306,19 +326,21 @@ const EventManagement = () => {
           <div className="bg-white rounded-lg w-full max-w-2xl mx-4">
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-4">
-                {isEditing ? 'Edit Event' : 'Add New Event'}
+                {isEditing ? "Edit Event" : "Add New Event"}
               </h2>
-              
+
               {formError && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                   {formError}
                 </div>
               )}
-              
+
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-gray-700 mb-2">Event Name *</label>
+                    <label className="block text-gray-700 mb-2">
+                      Event Name *
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -328,7 +350,7 @@ const EventManagement = () => {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-gray-700 mb-2">Date *</label>
                     <input
@@ -340,7 +362,7 @@ const EventManagement = () => {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-gray-700 mb-2">Time</label>
                     <input
@@ -351,7 +373,7 @@ const EventManagement = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-gray-700 mb-2">Location</label>
                     <input
@@ -362,9 +384,11 @@ const EventManagement = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-gray-700 mb-2">Price (₹)</label>
+                    <label className="block text-gray-700 mb-2">
+                      Price (₹)
+                    </label>
                     <input
                       type="number"
                       name="price"
@@ -374,7 +398,7 @@ const EventManagement = () => {
                       min="0"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-gray-700 mb-2">Capacity</label>
                     <input
@@ -387,9 +411,11 @@ const EventManagement = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Description</label>
+                  <label className="block text-gray-700 mb-2">
+                    Description
+                  </label>
                   <textarea
                     name="description"
                     value={formData.description}
@@ -398,9 +424,11 @@ const EventManagement = () => {
                     rows="4"
                   ></textarea>
                 </div>
-                
+
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Event Image</label>
+                  <label className="block text-gray-700 mb-2">
+                    Event Image
+                  </label>
 
                   {/* File Upload */}
                   <div className="mb-3">
@@ -418,7 +446,9 @@ const EventManagement = () => {
                   {/* Image Preview */}
                   {imagePreview && (
                     <div className="mb-3">
-                      <label className="block text-gray-700 mb-2">Preview:</label>
+                      <label className="block text-gray-700 mb-2">
+                        Preview:
+                      </label>
                       <img
                         src={imagePreview}
                         alt="Preview"
@@ -429,7 +459,9 @@ const EventManagement = () => {
 
                   {/* Alternative: Image URL */}
                   <div className="border-t pt-3">
-                    <label className="block text-gray-700 mb-2">Or enter image URL:</label>
+                    <label className="block text-gray-700 mb-2">
+                      Or enter image URL:
+                    </label>
                     <input
                       type="text"
                       name="image"
@@ -440,7 +472,7 @@ const EventManagement = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex justify-end space-x-3">
                   <button
                     type="button"
@@ -454,7 +486,11 @@ const EventManagement = () => {
                     disabled={uploading}
                     className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    {uploading ? 'Uploading...' : (isEditing ? 'Update Event' : 'Create Event')}
+                    {uploading
+                      ? "Uploading..."
+                      : isEditing
+                      ? "Update Event"
+                      : "Create Event"}
                   </button>
                 </div>
               </form>

@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { FaRupeeSign, FaUser, FaPhone, FaEnvelope, FaCalendarAlt, FaSearch, FaDownload } from 'react-icons/fa';
-import { db } from '../../services/firebase';
-import { collection, query, orderBy, getDocs, where } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import {
+  FaRupeeSign,
+  FaUser,
+  FaPhone,
+  FaEnvelope,
+  FaCalendarAlt,
+  FaSearch,
+  FaDownload,
+} from "react-icons/fa";
+import { db } from "../../../server/services/firebase";
+import { collection, query, orderBy, getDocs, where } from "firebase/firestore";
 
 const DonationManagement = () => {
   const [donations, setDonations] = useState([]);
   const [filteredDonations, setFilteredDonations] = useState([]);
   const [totalDonations, setTotalDonations] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [dateFilter, setDateFilter] = useState('all'); // 'all', 'today', 'week', 'month', 'year'
-  const [sortBy, setSortBy] = useState('date-desc'); // 'date-desc', 'date-asc', 'amount-desc', 'amount-asc'
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFilter, setDateFilter] = useState("all"); // 'all', 'today', 'week', 'month', 'year'
+  const [sortBy, setSortBy] = useState("date-desc"); // 'date-desc', 'date-asc', 'amount-desc', 'amount-asc'
 
   // Fetch donations
   useEffect(() => {
@@ -19,29 +27,29 @@ const DonationManagement = () => {
 
   const fetchDonations = async () => {
     try {
-      const donationsRef = collection(db, 'donations');
-      const q = query(donationsRef, orderBy('timestamp', 'desc'));
+      const donationsRef = collection(db, "donations");
+      const q = query(donationsRef, orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
-      
+
       const donationsList = [];
       let total = 0;
-      
+
       querySnapshot.forEach((doc) => {
         const donation = {
           id: doc.id,
           ...doc.data(),
-          timestamp: doc.data().timestamp?.toDate() || new Date()
+          timestamp: doc.data().timestamp?.toDate() || new Date(),
         };
         donationsList.push(donation);
         total += Number(donation.amount);
       });
-      
+
       setDonations(donationsList);
       setFilteredDonations(donationsList);
       setTotalDonations(total);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching donations:', error);
+      console.error("Error fetching donations:", error);
       setLoading(false);
     }
   };
@@ -49,51 +57,55 @@ const DonationManagement = () => {
   // Apply filters and search
   useEffect(() => {
     let result = [...donations];
-    
+
     // Apply date filter
-    if (dateFilter !== 'all') {
+    if (dateFilter !== "all") {
       const now = new Date();
       let filterDate = new Date();
-      
-      if (dateFilter === 'today') {
+
+      if (dateFilter === "today") {
         filterDate.setHours(0, 0, 0, 0);
-      } else if (dateFilter === 'week') {
+      } else if (dateFilter === "week") {
         filterDate.setDate(now.getDate() - 7);
-      } else if (dateFilter === 'month') {
+      } else if (dateFilter === "month") {
         filterDate.setMonth(now.getMonth() - 1);
-      } else if (dateFilter === 'year') {
+      } else if (dateFilter === "year") {
         filterDate.setFullYear(now.getFullYear() - 1);
       }
-      
-      result = result.filter(donation => donation.timestamp >= filterDate);
+
+      result = result.filter((donation) => donation.timestamp >= filterDate);
     }
-    
+
     // Apply search term
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      result = result.filter(donation => 
-        donation.name?.toLowerCase().includes(term) ||
-        donation.email?.toLowerCase().includes(term) ||
-        donation.phone?.includes(term) ||
-        donation.purpose?.toLowerCase().includes(term)
+      result = result.filter(
+        (donation) =>
+          donation.name?.toLowerCase().includes(term) ||
+          donation.email?.toLowerCase().includes(term) ||
+          donation.phone?.includes(term) ||
+          donation.purpose?.toLowerCase().includes(term)
       );
     }
-    
+
     // Apply sorting
-    if (sortBy === 'date-desc') {
+    if (sortBy === "date-desc") {
       result.sort((a, b) => b.timestamp - a.timestamp);
-    } else if (sortBy === 'date-asc') {
+    } else if (sortBy === "date-asc") {
       result.sort((a, b) => a.timestamp - b.timestamp);
-    } else if (sortBy === 'amount-desc') {
+    } else if (sortBy === "amount-desc") {
       result.sort((a, b) => Number(b.amount) - Number(a.amount));
-    } else if (sortBy === 'amount-asc') {
+    } else if (sortBy === "amount-asc") {
       result.sort((a, b) => Number(a.amount) - Number(b.amount));
     }
-    
+
     setFilteredDonations(result);
-    
+
     // Calculate total of filtered donations
-    const filteredTotal = result.reduce((sum, donation) => sum + Number(donation.amount), 0);
+    const filteredTotal = result.reduce(
+      (sum, donation) => sum + Number(donation.amount),
+      0
+    );
     setTotalDonations(filteredTotal);
   }, [donations, searchTerm, dateFilter, sortBy]);
 
@@ -110,19 +122,28 @@ const DonationManagement = () => {
   };
 
   const formatDate = (date) => {
-    return date instanceof Date 
-      ? date.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'short', 
-          day: 'numeric' 
+    return date instanceof Date
+      ? date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
         })
-      : 'Invalid date';
+      : "Invalid date";
   };
 
   const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'Phone', 'Amount', 'Purpose', 'Payment Method', 'Date', 'Message'];
-    
-    const csvData = filteredDonations.map(donation => [
+    const headers = [
+      "Name",
+      "Email",
+      "Phone",
+      "Amount",
+      "Purpose",
+      "Payment Method",
+      "Date",
+      "Message",
+    ];
+
+    const csvData = filteredDonations.map((donation) => [
       donation.name,
       donation.email,
       donation.phone,
@@ -130,20 +151,23 @@ const DonationManagement = () => {
       donation.purpose,
       donation.paymentMethod,
       formatDate(donation.timestamp),
-      donation.message
+      donation.message,
     ]);
-    
+
     const csvContent = [
-      headers.join(','),
-      ...csvData.map(row => row.map(cell => `"${cell || ''}"`).join(','))
-    ].join('\n');
-    
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      headers.join(","),
+      ...csvData.map((row) => row.map((cell) => `"${cell || ""}"`).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `donations_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `donations_${new Date().toISOString().split("T")[0]}.csv`
+    );
+    link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -163,7 +187,7 @@ const DonationManagement = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <h1 className="text-2xl font-bold mb-4 md:mb-0">Donation Management</h1>
-        
+
         <div className="bg-orange-100 rounded-lg p-4 text-center">
           <p className="text-sm text-orange-800">Total Donations</p>
           <p className="text-2xl font-bold text-orange-600">
@@ -189,7 +213,7 @@ const DonationManagement = () => {
               <FaSearch className="absolute left-3 top-3 text-gray-400" />
             </div>
           </div>
-          
+
           <div>
             <label className="block text-gray-700 mb-2">Date Range</label>
             <select
@@ -204,7 +228,7 @@ const DonationManagement = () => {
               <option value="year">Last Year</option>
             </select>
           </div>
-          
+
           <div>
             <label className="block text-gray-700 mb-2">Sort By</label>
             <select
@@ -219,7 +243,7 @@ const DonationManagement = () => {
             </select>
           </div>
         </div>
-        
+
         <div className="mt-4 flex justify-end">
           <button
             onClick={exportToCSV}
@@ -233,7 +257,9 @@ const DonationManagement = () => {
       {/* Donations List */}
       {filteredDonations.length === 0 ? (
         <div className="bg-white rounded-lg shadow-md p-6 text-center">
-          <p className="text-gray-500">No donations found matching your criteria.</p>
+          <p className="text-gray-500">
+            No donations found matching your criteria.
+          </p>
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -241,11 +267,21 @@ const DonationManagement = () => {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Donor</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purpose</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Method</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Donor
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Purpose
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Payment Method
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -277,10 +313,14 @@ const DonationManagement = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="capitalize">{donation.purpose || 'General'}</span>
+                      <span className="capitalize">
+                        {donation.purpose || "General"}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="capitalize">{donation.paymentMethod || 'N/A'}</span>
+                      <span className="capitalize">
+                        {donation.paymentMethod || "N/A"}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center">
