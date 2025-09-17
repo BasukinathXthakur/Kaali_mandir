@@ -15,7 +15,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 export default function Navbar() {
   const [languageOpen, setLanguageOpen] = useState(false);
@@ -79,11 +79,11 @@ export default function Navbar() {
             to="/"
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("home")}
+            {t("navbar.home")}
           </Link>
           <div className="relative group">
             <button className="flex items-center text-gray-700 hover:text-orange-600 transition-colors font-medium">
-              <span>{t("services")}</span>
+              <span>{t("navbar.services")}</span>
               <ChevronDown className="ml-1" />
             </button>
             <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-20 hidden group-hover:block">
@@ -92,35 +92,35 @@ export default function Navbar() {
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 <Heart className="mr-3 text-orange-600" />{" "}
-                {t("bookPujaChadhava")}
+                {t("home.bookPujaChadhava")}
               </Link>
               <Link
                 to="/panchang"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 <Clock className="mr-3 text-orange-600" />{" "}
-                {t("panchangHoroscope")}
+                {t("home.panchangHoroscope")}
               </Link>
               <Link
                 to="/music"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 <Music className="mr-3 text-orange-600" />{" "}
-                {t("devotionalMusic")}
+                {t("home.devotionalMusic")}
               </Link>
               <Link
                 to="/literature"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 <BookOpen className="mr-3 text-orange-600" />{" "}
-                {t("hinduLiterature")}
+                {t("home.hinduLiterature")}
               </Link>
               <Link
                 to="/virtual-temple"
                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
               >
                 <Building2 className="mr-3 text-orange-600" />{" "}
-                {t("divineTemple")}
+                {t("home.divineTemple")}
               </Link>
             </div>
           </div>
@@ -128,32 +128,32 @@ export default function Navbar() {
             to="/events"
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("events")}
+            {t("navbar.events")}
           </Link>
           <Link
             to="/yatra"
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("yatra")}
+            {t("navbar.yatra")}
           </Link>
           <Link
             to="/community"
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("community")}
+            {t("navbar.community")}
           </Link>
           <Link
             to="/donations"
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("donations")}
+            {t("navbar.donations")}
           </Link>
           {isAdmin && (
             <Link
               to="/admin"
               className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
             >
-              {t("admin")}
+              {t("navbar.admin")}
             </Link>
           )}
         </div>
@@ -226,14 +226,14 @@ export default function Navbar() {
                         to="/admin"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        {t("adminDashboard")}
+                        {t("navbar.adminDashboard")}
                       </Link>
                     )}
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      {t("logout")}
+                      {t("navbar.logout")}
                     </button>
                   </>
                 ) : (
@@ -241,7 +241,7 @@ export default function Navbar() {
                     to="/login"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    {t("login")}
+                    {t("navbar.login")}
                   </Link>
                 )}
               </div>

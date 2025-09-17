@@ -38,7 +38,7 @@ const Footer = () => {
             <h3 className="text-xl font-devanagari text-orange-500 mb-4">
               Kaali Mandir
             </h3>
-            <p className="text-gray-300 mb-4">{t("footerAbout")}</p>
+            <p className="text-gray-300 mb-4">{t("footer.footerAbout")}</p>
             <div className="flex space-x-4">
               <a
                 href="#"
@@ -75,14 +75,16 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">{t("quickLinks")}</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {t("footer.quickLinks")}
+            </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("home")}
+                  {t("navbar.home")}
                 </Link>
               </li>
               <li>
@@ -90,7 +92,7 @@ const Footer = () => {
                   to="/events"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("events")}
+                  {t("navbar.events")}
                 </Link>
               </li>
               <li>
@@ -98,7 +100,7 @@ const Footer = () => {
                   to="/donations"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("donations")}
+                  {t("navbar.donations")}
                 </Link>
               </li>
               <li>
@@ -106,7 +108,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("gallery")}
+                  {t("footer.gallery")}
                 </a>
               </li>
             </ul>
@@ -115,7 +117,7 @@ const Footer = () => {
           {/* Services */}
           <div>
             <h3 className="text-xl font-semibold mb-4">
-              {t("footerServices")}
+              {t("footer.footerServices")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -123,7 +125,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("pujaServices")}
+                  {t("home.pujaServices")}
                 </a>
               </li>
               <li>
@@ -131,7 +133,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("hawan")}
+                  {t("footer.hawan")}
                 </a>
               </li>
               <li>
@@ -139,7 +141,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("marriageCeremonies")}
+                  {t("footer.marriageCeremonies")}
                 </a>
               </li>
               <li>
@@ -147,7 +149,7 @@ const Footer = () => {
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  {t("spiritualGuidance")}
+                  {t("footer.spiritualGuidance")}
                 </a>
               </li>
             </ul>
@@ -155,7 +157,9 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">{t("contactUs")}</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {t("footer.contactUs")}
+            </h3>
             <ul className="space-y-2">
               <li className="flex items-center space-x-2">
                 <FaPhone className="text-gray-400" />
@@ -178,7 +182,8 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-5 text-center text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} Kaali Mandir. {t("copyright")}
+            &copy; {new Date().getFullYear()} Kaali Mandir.{" "}
+            {t("footer.copyright")}
           </p>
         </div>
       </div>

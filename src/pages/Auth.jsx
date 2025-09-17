@@ -1,47 +1,60 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaUser, FaEnvelope, FaPhone, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useAuth } from '../contexts/AuthContext';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: ''
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const { loginUser, registerUser } = useAuth();
+  const { t } = useLanguage();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
     try {
       if (isLogin) {
         await loginUser(formData.email, formData.password);
-        navigate('/');
+        navigate("/");
       } else {
-        await registerUser(formData.name, formData.email, formData.password, formData.phone);
-        navigate('/');
+        await registerUser(
+          formData.name,
+          formData.email,
+          formData.password,
+          formData.phone
+        );
+        navigate("/");
       }
     } catch (error) {
-      console.error('Authentication error:', error);
-      setError(error.message || 'Authentication failed. Please try again.');
+      console.error("Authentication error:", error);
+      setError(error.message || t("auth.authenticationFailed"));
     } finally {
       setLoading(false);
     }
@@ -49,7 +62,7 @@ const Auth = () => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setError('');
+    setError("");
   };
 
   return (
@@ -57,19 +70,27 @@ const Auth = () => {
       <div className="container mx-auto px-4 max-w-md">
         <div className="bg-white rounded-lg shadow-md p-8">
           <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            {isLogin ? 'Login to Your Account' : 'Create an Account'}
+            {isLogin ? t("auth.loginToYourAccount") : t("auth.createAnAccount")}
           </h1>
-          
+
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+            <div
+              className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4"
+              role="alert"
+            >
               <p>{error}</p>
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit}>
             {!isLogin && (
               <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-medium mb-1">Full Name</label>
+                <label
+                  htmlFor="name"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  {t("auth.fullName")}
+                </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaUser className="text-gray-400" />
@@ -81,15 +102,20 @@ const Auth = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    placeholder="Your Name"
+                    placeholder={t("auth.yourName")}
                     required={!isLogin}
                   />
                 </div>
               </div>
             )}
-            
+
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700 font-medium mb-1">Email Address</label>
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-medium mb-1"
+              >
+                {t("auth.emailAddress")}
+              </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaEnvelope className="text-gray-400" />
@@ -101,15 +127,20 @@ const Auth = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  placeholder="Your Email"
+                  placeholder={t("auth.yourEmail")}
                   required
                 />
               </div>
             </div>
-            
+
             {!isLogin && (
               <div className="mb-4">
-                <label htmlFor="phone" className="block text-gray-700 font-medium mb-1">Phone Number</label>
+                <label
+                  htmlFor="phone"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  {t("auth.phoneNumber")}
+                </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FaPhone className="text-gray-400" />
@@ -121,15 +152,20 @@ const Auth = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    placeholder="Your Phone"
+                    placeholder={t("auth.yourPhone")}
                     required={!isLogin}
                   />
                 </div>
               </div>
             )}
-            
+
             <div className="mb-6">
-              <label htmlFor="password" className="block text-gray-700 font-medium mb-1">Password</label>
+              <label
+                htmlFor="password"
+                className="block text-gray-700 font-medium mb-1"
+              >
+                {t("auth.password")}
+              </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaLock className="text-gray-400" />
@@ -141,7 +177,7 @@ const Auth = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  placeholder="Your Password"
+                  placeholder={t("auth.yourPassword")}
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -155,7 +191,7 @@ const Auth = () => {
                 </div>
               </div>
             </div>
-            
+
             <button
               type="submit"
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-md transition-colors flex justify-center items-center"
@@ -163,18 +199,20 @@ const Auth = () => {
             >
               {loading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+              ) : isLogin ? (
+                t("auth.login")
               ) : (
-                isLogin ? 'Login' : 'Register'
+                t("auth.register")
               )}
             </button>
           </form>
-          
+
           <div className="mt-4 text-center">
             <button
               onClick={toggleForm}
               className="text-orange-500 hover:text-orange-600 font-medium focus:outline-none"
             >
-              {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
+              {isLogin ? t("auth.needAnAccount") : t("auth.alreadyHaveAccount")}
             </button>
           </div>
         </div>

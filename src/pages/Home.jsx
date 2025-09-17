@@ -21,7 +21,7 @@ import {
   limit,
   getDocs,
 } from "firebase/firestore";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 const Home = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -116,23 +116,23 @@ const Home = () => {
         ></div>
         <div className="relative container mx-auto px-4 py-32 flex flex-col items-center justify-center text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 font-devanagari">
-            {t("welcomeToKaaliMandir")}
+            {t("home.welcomeToKaaliMandir")}
           </h1>
           <p className="text-xl md:text-2xl mb-8">
-            {t("yourTempleAnytimeAnywhere")}
+            {t("home.yourTempleAnytimeAnywhere")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to="/pujas"
               className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg"
             >
-              {t("bookAPuja")}
+              {t("home.bookAPuja")}
             </Link>
             <Link
               to="/community"
               className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors shadow-lg border-2 border-orange-600"
             >
-              {t("joinCommunity")}
+              {t("home.joinCommunity")}
             </Link>
           </div>
         </div>
@@ -144,7 +144,7 @@ const Home = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
-                {t("nextEvent")}: {nextEvent.name}
+                {t("home.nextEvent")}: {nextEvent.name}
               </h2>
               <p className="text-gray-600">
                 {new Date(nextEvent.date).toLocaleDateString("en-US", {
@@ -161,25 +161,25 @@ const Home = () => {
                   <div className="text-3xl font-bold text-orange-500">
                     {timeRemaining.days}
                   </div>
-                  <div className="text-gray-600">{t("days")}</div>
+                  <div className="text-gray-600">{t("home.days")}</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
                   <div className="text-3xl font-bold text-orange-500">
                     {timeRemaining.hours}
                   </div>
-                  <div className="text-gray-600">{t("hours")}</div>
+                  <div className="text-gray-600">{t("home.hours")}</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
                   <div className="text-3xl font-bold text-orange-500">
                     {timeRemaining.minutes}
                   </div>
-                  <div className="text-gray-600">{t("minutes")}</div>
+                  <div className="text-gray-600">{t("home.minutes")}</div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow">
                   <div className="text-3xl font-bold text-orange-500">
                     {timeRemaining.seconds}
                   </div>
-                  <div className="text-gray-600">{t("seconds")}</div>
+                  <div className="text-gray-600">{t("home.seconds")}</div>
                 </div>
               </div>
             </div>
@@ -192,9 +192,11 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">
-              {t("divineServices")}
+              {t("home.divineServices")}
             </h2>
-            <p className="text-gray-600">{t("connectWithSpiritualJourney")}</p>
+            <p className="text-gray-600">
+              {t("home.connectWithSpiritualJourney")}
+            </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
@@ -206,10 +208,10 @@ const Home = () => {
                 <HandHeart className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("bookPujaChadhava")}
+                {t("home.bookPujaChadhava")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("scheduleSacredRituals")}
+                {t("home.scheduleSacredRituals")}
               </p>
             </Link>
 
@@ -221,10 +223,10 @@ const Home = () => {
                 <Clock className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("panchangHoroscope")}
+                {t("home.panchangHoroscope")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("dailyAstrologicalGuidance")}
+                {t("home.dailyAstrologicalGuidance")}
               </p>
             </Link>
 
@@ -236,10 +238,10 @@ const Home = () => {
                 <Music className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("devotionalMusic")}
+                {t("home.devotionalMusic")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("sacredBhajansMantras")}
+                {t("home.sacredBhajansMantras")}
               </p>
             </Link>
 
@@ -251,10 +253,10 @@ const Home = () => {
                 <BookOpen className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("hinduLiterature")}
+                {t("home.hinduLiterature")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("ancientWisdomScriptures")}
+                {t("home.ancientWisdomScriptures")}
               </p>
             </Link>
 
@@ -266,10 +268,10 @@ const Home = () => {
                 <Building2 className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("divineTemple")}
+                {t("home.divineTemple")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("virtualMandirExperience")}
+                {t("home.virtualMandirExperience")}
               </p>
             </Link>
 
@@ -281,10 +283,10 @@ const Home = () => {
                 <Users className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("sanataniCommunity")}
+                {t("home.sanataniCommunity")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("connectWithDevotees")}
+                {t("home.connectWithDevotees")}
               </p>
             </Link>
 
@@ -296,9 +298,11 @@ const Home = () => {
                 <MapPin className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("yatraDarshan")}
+                {t("home.yatraDarshan")}
               </h3>
-              <p className="text-sm text-gray-600">{t("pilgrimageJourneys")}</p>
+              <p className="text-sm text-gray-600">
+                {t("home.pilgrimageJourneys")}
+              </p>
             </Link>
 
             <Link
@@ -309,10 +313,10 @@ const Home = () => {
                 <DollarSign className="text-2xl" />
               </div>
               <h3 className="font-bold text-gray-800 mb-1">
-                {t("chandaDonations")}
+                {t("home.chandaDonations")}
               </h3>
               <p className="text-sm text-gray-600">
-                {t("supportTempleActivities")}
+                {t("home.supportTempleActivities")}
               </p>
             </Link>
           </div>
@@ -320,9 +324,11 @@ const Home = () => {
           {/* Upcoming Events Section */}
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">
-              {t("upcomingEvents")}
+              {t("home.upcomingEvents")}
             </h2>
-            <p className="text-gray-600">{t("joinUsForSacredCeremonies")}</p>
+            <p className="text-gray-600">
+              {t("home.joinUsForSacredCeremonies")}
+            </p>
           </div>
 
           {loading ? (
@@ -366,7 +372,7 @@ const Home = () => {
                       to={`/events/${event.id}`}
                       className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors"
                     >
-                      {t("bookNow")}
+                      {t("home.bookNow")}
                     </Link>
                   </div>
                 </div>
@@ -374,7 +380,7 @@ const Home = () => {
             </div>
           ) : (
             <div className="text-center text-gray-600">
-              <p>{t("noUpcomingEvents")}</p>
+              <p>{t("home.noUpcomingEvents")}</p>
             </div>
           )}
 
@@ -383,7 +389,7 @@ const Home = () => {
               to="/events"
               className="inline-block border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold py-2 px-6 rounded-lg transition-colors"
             >
-              {t("viewAllEvents")}
+              {t("home.viewAllEvents")}
             </Link>
           </div>
         </div>
@@ -395,14 +401,16 @@ const Home = () => {
           <div className="max-w-3xl mx-auto text-center">
             <Heart className="text-5xl text-orange-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              {t("supportOurTemple")}
+              {t("home.supportOurTemple")}
             </h2>
-            <p className="text-gray-600 mb-8">{t("yourGenerousDonations")}</p>
+            <p className="text-gray-600 mb-8">
+              {t("home.yourGenerousDonations")}
+            </p>
             <Link
               to="/donations"
               className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
             >
-              {t("donateNow")}
+              {t("home.donateNow")}
             </Link>
           </div>
         </div>
@@ -413,9 +421,9 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
-              {t("ourServices")}
+              {t("home.ourServices")}
             </h2>
-            <p className="text-gray-600">{t("weOfferVariousReligious")}</p>
+            <p className="text-gray-600">{t("home.weOfferVariousReligious")}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -424,9 +432,9 @@ const Home = () => {
                 <span className="text-2xl text-orange-500">🙏</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {t("pujaServices")}
+                {t("home.pujaServices")}
               </h3>
-              <p className="text-gray-600">{t("wePerformVariousPujas")}</p>
+              <p className="text-gray-600">{t("home.wePerformVariousPujas")}</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-lg text-center">
@@ -434,9 +442,9 @@ const Home = () => {
                 <span className="text-2xl text-orange-500">🔥</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {t("hawanCeremonies")}
+                {t("home.hawanCeremonies")}
               </h3>
-              <p className="text-gray-600">{t("sacredFireCeremonies")}</p>
+              <p className="text-gray-600">{t("home.sacredFireCeremonies")}</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-lg text-center">
@@ -444,9 +452,11 @@ const Home = () => {
                 <span className="text-2xl text-orange-500">💍</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {t("weddingCeremonies")}
+                {t("home.weddingCeremonies")}
               </h3>
-              <p className="text-gray-600">{t("traditionalHinduWedding")}</p>
+              <p className="text-gray-600">
+                {t("home.traditionalHinduWedding")}
+              </p>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { getEvents } from "../../server/services/eventService";
 import { useAuth } from "../contexts/AuthContext";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "../hooks/useLanguage";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -58,10 +58,10 @@ const Events = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            {t("events")}
+            {t("events.allEvents")}
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            {t("joinUsForSacredCeremonies")}
+            {t("home.joinUsForSacredCeremonies")}
           </p>
         </div>
 
@@ -77,7 +77,7 @@ const Events = () => {
               }`}
               onClick={() => handleFilterChange("upcoming")}
             >
-              {t("upcomingEvents")}
+              {t("home.upcomingEvents")}
             </button>
             <button
               type="button"
@@ -88,7 +88,7 @@ const Events = () => {
               }`}
               onClick={() => handleFilterChange("past")}
             >
-              {t("pastEvents")}
+              {t("events.pastEvents")}
             </button>
             <button
               type="button"
@@ -99,7 +99,7 @@ const Events = () => {
               }`}
               onClick={() => handleFilterChange("all")}
             >
-              {t("allEvents")}
+              {t("events.allEvents")}
             </button>
           </div>
         </div>
@@ -130,8 +130,8 @@ const Events = () => {
                   )}
                   <div className="absolute top-0 right-0 bg-orange-500 text-white py-1 px-3 rounded-bl-lg">
                     {new Date(event.date) < new Date()
-                      ? t("pastEvent")
-                      : t("upcoming")}
+                      ? t("events.pastEvent")
+                      : t("events.upcoming")}
                   </div>
                 </div>
                 <div className="p-5">
@@ -176,7 +176,7 @@ const Events = () => {
                       to={`/events/${event.id}`}
                       className="text-orange-500 hover:text-orange-600 font-medium"
                     >
-                      {t("viewDetails")}
+                      {t("events.viewDetails")}
                     </Link>
 
                     {currentUser && new Date(event.date) > new Date() && (
@@ -186,7 +186,7 @@ const Events = () => {
                           (window.location.href = `/events/${event.id}#booking`)
                         }
                       >
-                        {t("bookNow")}
+                        {t("home.bookNow")}
                       </button>
                     )}
                   </div>
@@ -199,15 +199,15 @@ const Events = () => {
             <FaCalendarAlt className="text-5xl text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               {filter === "upcoming"
-                ? t("noUpcomingEventsFound")
+                ? t("events.noUpcomingEventsFound")
                 : filter === "past"
-                ? t("noPastEventsFound")
-                : t("noEventsFound")}
+                ? t("events.noPastEventsFound")
+                : t("events.noEventsFound")}
             </h3>
             <p className="text-gray-600">
               {filter === "upcoming"
-                ? t("checkBackLater")
-                : t("checkOtherCategories")}
+                ? t("events.checkBackLater")
+                : t("events.checkOtherCategories")}
             </p>
           </div>
         )}
