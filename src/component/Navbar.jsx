@@ -1,6 +1,6 @@
 // Navbar.jsx
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   User,
   Bell,
@@ -20,12 +20,15 @@ import { useLanguage } from "../hooks/useLanguage";
 export default function Navbar() {
   const [languageOpen, setLanguageOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const { currentUser, isAdmin, logout } = useAuth();
   const { currentLanguage, changeLanguage, t, languageNames, languages } =
     useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const languageRef = useRef(null);
   const userMenuRef = useRef(null);
+  const servicesRef = useRef(null);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -36,13 +39,22 @@ export default function Navbar() {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
         setUserMenuOpen(false);
       }
+      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
+        setServicesOpen(false);
+      }
     };
 
+    // Use mousedown for better detection
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // Close services menu when route changes
+  useEffect(() => {
+    setServicesOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -59,14 +71,14 @@ export default function Navbar() {
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <Link to="/">
+          <Link to="/" onClick={() => setServicesOpen(false)}>
             <img
               src="/src/assets/logo.png"
               alt="Kaali Mandir"
               className="w-12 h-12 rounded-full border-2 border-orange-600 p-1"
             />
           </Link>
-          <Link to="/">
+          <Link to="/" onClick={() => setServicesOpen(false)}>
             <span className="text-xl font-devanagari text-orange-600">
               Kaali Mandir
             </span>
@@ -77,73 +89,91 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6">
           <Link
             to="/"
+            onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
             {t("navbar.home")}
           </Link>
-          <div className="relative group">
-            <button className="flex items-center text-gray-700 hover:text-orange-600 transition-colors font-medium">
+          <div className="relative" ref={servicesRef}>
+            <button
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                setServicesOpen(!servicesOpen);
+              }}
+              className="flex items-center text-gray-700 hover:text-orange-600 transition-colors font-medium"
+            >
               <span>{t("navbar.services")}</span>
               <ChevronDown className="ml-1" />
             </button>
-            <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-20 hidden group-hover:block">
-              <Link
-                to="/pujas"
-                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-              >
-                <Heart className="mr-3 text-orange-600" />{" "}
-                {t("home.bookPujaChadhava")}
-              </Link>
-              <Link
-                to="/panchang"
-                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-              >
-                <Clock className="mr-3 text-orange-600" />{" "}
-                {t("home.panchangHoroscope")}
-              </Link>
-              <Link
-                to="/music"
-                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-              >
-                <Music className="mr-3 text-orange-600" />{" "}
-                {t("home.devotionalMusic")}
-              </Link>
-              <Link
-                to="/literature"
-                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-              >
-                <BookOpen className="mr-3 text-orange-600" />{" "}
-                {t("home.hinduLiterature")}
-              </Link>
-              <Link
-                to="/virtual-temple"
-                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-              >
-                <Building2 className="mr-3 text-orange-600" />{" "}
-                {t("home.divineTemple")}
-              </Link>
-            </div>
+            {servicesOpen && (
+              <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-20">
+                <Link
+                  to="/pujas"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Heart className="mr-3 text-orange-600" />{" "}
+                  {t("home.bookPujaChadhava")}
+                </Link>
+                <Link
+                  to="/panchang"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Clock className="mr-3 text-orange-600" />{" "}
+                  {t("home.panchangHoroscope")}
+                </Link>
+                <Link
+                  to="/music"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Music className="mr-3 text-orange-600" />{" "}
+                  {t("home.devotionalMusic")}
+                </Link>
+                <Link
+                  to="/literature"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <BookOpen className="mr-3 text-orange-600" />{" "}
+                  {t("home.hinduLiterature")}
+                </Link>
+                <Link
+                  to="/virtual-temple"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Building2 className="mr-3 text-orange-600" />{" "}
+                  {t("home.divineTemple")}
+                </Link>
+              </div>
+            )}
           </div>
           <Link
             to="/events"
+            onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
             {t("navbar.events")}
           </Link>
           <Link
             to="/yatra"
+            onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
             {t("navbar.yatra")}
           </Link>
           <Link
             to="/community"
+            onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
             {t("navbar.community")}
           </Link>
           <Link
             to="/donations"
+            onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
             {t("navbar.donations")}
@@ -151,6 +181,7 @@ export default function Navbar() {
           {isAdmin && (
             <Link
               to="/admin"
+              onClick={() => setServicesOpen(false)}
               className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
             >
               {t("navbar.admin")}
@@ -163,7 +194,10 @@ export default function Navbar() {
           {/* Language Selector */}
           <div className="relative" ref={languageRef}>
             <button
-              onClick={() => setLanguageOpen(!languageOpen)}
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                setLanguageOpen(!languageOpen);
+              }}
               className="flex items-center border px-2 py-1 rounded-md text-gray-700 hover:bg-gray-100"
             >
               {languageNames[currentLanguage]}
@@ -208,7 +242,10 @@ export default function Navbar() {
           {/* User Menu */}
           <div className="relative" ref={userMenuRef}>
             <div
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              onMouseDown={(e) => {
+                e.stopPropagation();
+                setUserMenuOpen(!userMenuOpen);
+              }}
               className="cursor-pointer"
             >
               <User className="w-8 h-8 text-gray-500" />

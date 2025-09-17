@@ -187,9 +187,85 @@ const Home = () => {
         </div>
       )}
 
+      {/* Upcoming Events Section - full width background like Support Our Temple */}
+      <div className="py-16 mt-20 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">
+              {t("home.upcomingEvents")}
+            </h2>
+            <p className="text-gray-600">
+              {t("home.joinUsForSacredCeremonies")}
+            </p>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+            </div>
+          ) : upcomingEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {upcomingEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
+                >
+                  <div className="h-48 bg-gray-200 relative">
+                    {event.imageUrl ? (
+                      <img
+                        src={event.imageUrl}
+                        alt={event.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-orange-100">
+                        <Calendar className="text-5xl text-orange-500" />
+                      </div>
+                    )}
+                    <div className="absolute top-0 right-0 bg-orange-500 text-white py-1 px-3 rounded-bl-lg">
+                      {new Date(event.date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {event.name}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2">
+                      {event.description}
+                    </p>
+                    <Link
+                      to={`/events/${event.id}`}
+                      className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors"
+                    >
+                      {t("home.bookNow")}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-600">
+              <p>{t("home.noUpcomingEvents")}</p>
+            </div>
+          )}
+
+          <div className="text-center mt-10">
+            <Link
+              to="/events"
+              className="inline-block border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold py-2 px-6 rounded-lg transition-colors"
+            >
+              {t("home.viewAllEvents")}
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Quick Access Cards */}
       <div className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 ">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">
               {t("home.divineServices")}
@@ -318,78 +394,6 @@ const Home = () => {
               <p className="text-sm text-gray-600">
                 {t("home.supportTempleActivities")}
               </p>
-            </Link>
-          </div>
-
-          {/* Upcoming Events Section */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-2 font-devanagari">
-              {t("home.upcomingEvents")}
-            </h2>
-            <p className="text-gray-600">
-              {t("home.joinUsForSacredCeremonies")}
-            </p>
-          </div>
-
-          {loading ? (
-            <div className="flex justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
-            </div>
-          ) : upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {upcomingEvents.map((event) => (
-                <div
-                  key={event.id}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
-                >
-                  <div className="h-48 bg-gray-200 relative">
-                    {event.imageUrl ? (
-                      <img
-                        src={event.imageUrl}
-                        alt={event.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-orange-100">
-                        <Calendar className="text-5xl text-orange-500" />
-                      </div>
-                    )}
-                    <div className="absolute top-0 right-0 bg-orange-500 text-white py-1 px-3 rounded-bl-lg">
-                      {new Date(event.date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                      {event.name}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {event.description}
-                    </p>
-                    <Link
-                      to={`/events/${event.id}`}
-                      className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors"
-                    >
-                      {t("home.bookNow")}
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center text-gray-600">
-              <p>{t("home.noUpcomingEvents")}</p>
-            </div>
-          )}
-
-          <div className="text-center mt-10">
-            <Link
-              to="/events"
-              className="inline-block border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              {t("home.viewAllEvents")}
             </Link>
           </div>
         </div>

@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Donations from "./pages/Donations";
 import Auth from "./pages/Auth";
+import Literature from "./pages/Literature";
+import AartiDetail from "./pages/AartiDetail";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import EventManagement from "./pages/Admin/EventManagement";
 import DonationManagement from "./pages/Admin/DonationManagement";
@@ -26,6 +28,11 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<Events />} />
+                <Route path="/literature" element={<Literature />} />
+                <Route
+                  path="/literature/:deitySlug"
+                  element={<AartiDetail />}
+                />
                 <Route
                   path="/donations"
                   element={
