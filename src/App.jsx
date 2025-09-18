@@ -8,6 +8,9 @@ import Donations from "./pages/Donations";
 import Auth from "./pages/Auth";
 import Literature from "./pages/Literature";
 import AartiDetail from "./pages/AartiDetail";
+import Mahabharat from "./pages/Mahabharat";
+import Ramayana from "./pages/Ramayana";
+import BhagavadGita from "./pages/BhagavadGita";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import EventManagement from "./pages/Admin/EventManagement";
 import DonationManagement from "./pages/Admin/DonationManagement";
@@ -29,6 +32,12 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/literature" element={<Literature />} />
+                <Route path="/literature/mahabharat" element={<Mahabharat />} />
+                <Route path="/literature/ramayana" element={<Ramayana />} />
+                <Route
+                  path="/literature/bhagavad-gita"
+                  element={<BhagavadGita />}
+                />
                 <Route
                   path="/literature/:deitySlug"
                   element={<AartiDetail />}

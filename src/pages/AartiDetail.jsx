@@ -114,7 +114,7 @@ const AartiDetail = () => {
                       <div>
                         <h3 className="font-semibold">{aarti.title}</h3>
                         <p className="text-sm opacity-75">
-                          {new Date(aarti.updatedAt).toLocaleDateString()}
+                          {t("aarti.sanskrit", "Sanskrit")}
                         </p>
                       </div>
                       <BookOpen className="text-gray-400" />
@@ -152,22 +152,30 @@ const AartiDetail = () => {
                     <div className="flex items-center space-x-3">
                       <button
                         onClick={toggleMute}
-                        className="p-2 bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all"
+                        className={`p-3 rounded-full transition-colors ${
+                          isMuted
+                            ? "bg-red-500 hover:bg-red-600"
+                            : "bg-white bg-opacity-20 hover:bg-opacity-30"
+                        }`}
                       >
                         {isMuted ? (
-                          <VolumeX className="w-5 h-5" />
+                          <VolumeX className="w-6 h-6" />
                         ) : (
-                          <Volume2 className="w-5 h-5" />
+                          <Volume2 className="w-6 h-6" />
                         )}
                       </button>
                       <button
                         onClick={togglePlayPause}
-                        className="p-3 bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all"
+                        className={`p-3 rounded-full transition-colors ${
+                          isPlaying
+                            ? "bg-orange-500 hover:bg-orange-600"
+                            : "bg-white bg-opacity-20 hover:bg-opacity-30"
+                        }`}
                       >
                         {isPlaying ? (
                           <Pause className="w-6 h-6" />
                         ) : (
-                          <Play className="w-6 h-6" />
+                          <Play className="w-6 h-6 ml-1" />
                         )}
                       </button>
                     </div>
@@ -176,7 +184,6 @@ const AartiDetail = () => {
 
                 {/* Aarti Content */}
                 <div className="p-8">
-                  {/* Sample Aarti Text - This would be replaced with actual content */}
                   <div className="prose prose-lg max-w-none">
                     <div className="text-center mb-8">
                       <h3 className="text-2xl font-bold text-gray-800 mb-4 font-devanagari">
@@ -184,97 +191,12 @@ const AartiDetail = () => {
                       </h3>
                     </div>
 
-                    {/* Sample aarti verses - Replace with actual content */}
+                    {/* Actual Sanskrit Aarti Content */}
                     <div className="space-y-6 text-gray-700 leading-relaxed">
-                      <div className="text-center">
-                        <p className="text-lg font-medium mb-4">
-                          {t("aarti.sampleVerse1", "ॐ जय माता दी, जय माता दी")}
-                        </p>
-                        <p className="text-gray-600">
-                          {t(
-                            "aarti.sampleTranslation1",
-                            "Glory to the Divine Mother, Glory to the Divine Mother"
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="text-center">
-                        <p className="text-lg font-medium mb-4">
-                          {t(
-                            "aarti.sampleVerse2",
-                            "तुम सबके रक्षक हो, तुम सबके पालक हो"
-                          )}
-                        </p>
-                        <p className="text-gray-600">
-                          {t(
-                            "aarti.sampleTranslation2",
-                            "You are the protector of all, You are the nurturer of all"
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="text-center">
-                        <p className="text-lg font-medium mb-4">
-                          {t("aarti.sampleVerse3", "माता तेरी महिमा अपरम्पार")}
-                        </p>
-                        <p className="text-gray-600">
-                          {t(
-                            "aarti.sampleTranslation3",
-                            "Mother, Your glory is boundless"
-                          )}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Audio Player Placeholder */}
-                    <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="font-semibold text-gray-800">
-                          {t("aarti.audioPlayer", "Audio Player")}
-                        </h4>
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={toggleMute}
-                            className={`p-2 rounded-full ${
-                              isMuted
-                                ? "bg-red-100 text-red-600"
-                                : "bg-gray-200 text-gray-600"
-                            }`}
-                          >
-                            {isMuted ? (
-                              <VolumeX className="w-4 h-4" />
-                            ) : (
-                              <Volume2 className="w-4 h-4" />
-                            )}
-                          </button>
-                          <button
-                            onClick={togglePlayPause}
-                            className={`p-2 rounded-full ${
-                              isPlaying
-                                ? "bg-orange-100 text-orange-600"
-                                : "bg-orange-200 text-orange-600"
-                            }`}
-                          >
-                            {isPlaying ? (
-                              <Pause className="w-4 h-4" />
-                            ) : (
-                              <Play className="w-4 h-4" />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                        <div
-                          className="bg-orange-500 h-2 rounded-full"
-                          style={{ width: "30%" }}
-                        ></div>
-                      </div>
-
-                      <div className="flex justify-between text-sm text-gray-500">
-                        <span>1:23</span>
-                        <span>4:56</span>
+                      <div className="bg-gray-50 p-6 rounded-lg">
+                        <pre className="text-lg font-medium text-center whitespace-pre-wrap font-devanagari leading-relaxed">
+                          {selectedAarti.sanskrit}
+                        </pre>
                       </div>
                     </div>
 
@@ -286,7 +208,7 @@ const AartiDetail = () => {
                       <p className="text-gray-700 leading-relaxed">
                         {t(
                           "aarti.sampleMeaning",
-                          "This aarti is a devotional prayer that expresses deep reverence and love for the Divine Mother. It is traditionally sung during evening prayers and special ceremonies to invoke blessings and protection."
+                          "This aarti is a devotional prayer that expresses deep reverence and love for the Divine. It is traditionally sung during evening prayers and special ceremonies to invoke blessings and protection."
                         )}
                       </p>
                     </div>

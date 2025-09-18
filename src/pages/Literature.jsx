@@ -126,61 +126,82 @@ const Literature = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Bhagavad Gita */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">📖</span>
+            <Link to="/literature/bhagavad-gita" className="group block">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group-hover:shadow-xl">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">📖</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {t("literature.bhagavadGita", "Bhagavad Gita")}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {t(
+                      "literature.divineSong",
+                      "The Divine Song of Lord Krishna"
+                    )}
+                  </p>
+                  <div className="flex items-center justify-center">
+                    <span className="text-blue-600 font-medium group-hover:text-blue-700">
+                      {t("literature.readNow", "Read Now")}
+                    </span>
+                    <ChevronRight className="text-blue-600 group-hover:translate-x-1 transition-transform ml-2" />
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t("literature.bhagavadGita", "Bhagavad Gita")}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  {t(
-                    "literature.divineSong",
-                    "The Divine Song of Lord Krishna"
-                  )}
-                </p>
-                <button className="text-blue-600 font-medium hover:text-blue-700">
-                  {t("literature.readNow", "Read Now")}
-                </button>
               </div>
-            </div>
+            </Link>
 
             {/* Ramayana */}
-            <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🏹</span>
+            <Link to="/literature/ramayana" className="group block">
+              <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group-hover:shadow-xl">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">🏹</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {t("literature.ramayana", "Ramayana")}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {t(
+                      "literature.epicOfRama",
+                      "The Epic Journey of Lord Rama"
+                    )}
+                  </p>
+                  <div className="flex items-center justify-center">
+                    <span className="text-orange-600 font-medium group-hover:text-orange-700">
+                      {t("literature.readNow", "Read Now")}
+                    </span>
+                    <ChevronRight className="text-orange-600 group-hover:translate-x-1 transition-transform ml-2" />
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t("literature.ramayana", "Ramayana")}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  {t("literature.epicOfRama", "The Epic Journey of Lord Rama")}
-                </p>
-                <button className="text-orange-600 font-medium hover:text-orange-700">
-                  {t("literature.readNow", "Read Now")}
-                </button>
               </div>
-            </div>
+            </Link>
 
             {/* Mahabharata */}
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">⚔️</span>
+            <Link to="/literature/mahabharat" className="group block">
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group-hover:shadow-xl">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">⚔️</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {t("literature.mahabharata", "Mahabharata")}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {t(
+                      "literature.greatEpic",
+                      "The Great Epic of Ancient India"
+                    )}
+                  </p>
+                  <div className="flex items-center justify-center">
+                    <span className="text-purple-600 font-medium group-hover:text-purple-700">
+                      {t("literature.readNow", "Read Now")}
+                    </span>
+                    <ChevronRight className="text-purple-600 group-hover:translate-x-1 transition-transform ml-2" />
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t("literature.mahabharata", "Mahabharata")}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  {t("literature.greatEpic", "The Great Epic of Ancient India")}
-                </p>
-                <button className="text-purple-600 font-medium hover:text-purple-700">
-                  {t("literature.readNow", "Read Now")}
-                </button>
               </div>
-            </div>
+            </Link>
 
             {/* Vedas */}
             <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
