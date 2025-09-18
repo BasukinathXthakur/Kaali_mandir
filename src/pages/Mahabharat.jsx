@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Search,
   Filter,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../hooks/useLanguage";
@@ -15,9 +16,6 @@ import completeMahabharataData from "../data/completeMahabharataData";
 const Mahabharat = () => {
   const { t } = useLanguage();
   const [expandedParva, setExpandedParva] = useState(null);
-  const [selectedChapter, setSelectedChapter] = useState(null);
-  const [selectedParvaSlug, setSelectedParvaSlug] = useState(null);
-  const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredParvas, setFilteredParvas] = useState([]);
 
@@ -33,28 +31,6 @@ const Mahabharat = () => {
   const toggleParva = (parvaId) => {
     setExpandedParva(expandedParva === parvaId ? null : parvaId);
   };
-
-  const handleChapterClick = (parvaSlug, chapterNumber) => {
-    setSelectedParvaSlug(parvaSlug);
-    setSelectedChapter(chapterNumber);
-    setIsChapterModalOpen(true);
-  };
-
-  const handleNavigateChapter = (chapterNumber) => {
-    setSelectedChapter(chapterNumber);
-  };
-
-  const handleCloseChapterModal = () => {
-    setIsChapterModalOpen(false);
-    setSelectedChapter(null);
-    setSelectedParvaSlug(null);
-  };
-
-  // Create parva slug mapping from the comprehensive data
-  const parvaSlugMap = {};
-  completeMahabharataData.getAllParvas().forEach((parva) => {
-    parvaSlugMap[parva.id] = parva.slug;
-  });
 
   // Filter parvas based on search term
   const filterParvas = (parvas, searchTerm) => {
@@ -286,12 +262,13 @@ const Mahabharat = () => {
                       </div>
                     </div>
 
-                    {/* Read All Chapters Button */}
+                    {/* Read All Chapters Button - TODO: Implement chapter reading functionality */}
                     <div className="mt-6 text-center">
                       <button
-                        onClick={() =>
-                          handleChapterClick(parvaSlugMap[parva.id], 1)
-                        }
+                        onClick={() => {
+                          // TODO: Implement chapter reading functionality
+                          console.log(`Read chapters for ${parva.name}`);
+                        }}
                         className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                       >
                         {t("mahabharat.readAllChapters", "Read All Chapters")} (
@@ -392,15 +369,15 @@ const Mahabharat = () => {
         </div>
       </div>
 
-      {/* Chapter Detail Modal */}
-      <ChapterDetailModal
+      {/* Chapter Detail Modal - TODO: Implement ChapterDetailModal component */}
+      {/* <ChapterDetailModal
         isOpen={isChapterModalOpen}
         onClose={handleCloseChapterModal}
         parvaSlug={selectedParvaSlug}
         chapterNumber={selectedChapter}
         onNavigateChapter={handleNavigateChapter}
         epicType="mahabharata"
-      />
+      /> */}
     </div>
   );
 };
