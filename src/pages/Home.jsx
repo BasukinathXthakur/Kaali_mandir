@@ -107,35 +107,79 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Banner */}
-      <div className="relative bg-gray-900 text-white">
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/src/assets/temple-banner.jpg')" }}
-        ></div>
-        <div className="relative container mx-auto px-4 py-32 flex flex-col items-center justify-center text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 font-devanagari">
-            {t("home.welcomeToKaaliMandir")}
-          </h1>
-          <p className="text-xl md:text-2xl mb-8">
-            {t("home.yourTempleAnytimeAnywhere")}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              to="/pujas"
-              className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg"
-            >
-              {t("home.bookAPuja")}
-            </Link>
-            <Link
-              to="/community"
-              className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors shadow-lg border-2 border-orange-600"
-            >
-              {t("home.joinCommunity")}
-            </Link>
+      {/* Hero Banner - Sri Mandir Inspired with Blurred Gradient */}
+      <div className="relative p-14 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="/durga.jpeg"
+            alt="Maa Kali"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Gradient Overlay - Blends from left (dark) to right (transparent) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20"></div>
+
+        {/* Additional blur effect in the middle */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-transparent backdrop-blur-sm"></div> */}
+
+        {/* Content Container */}
+        <div className="relative z-10 h-96 flex items-center">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl">
+              {/* Left Side - Text Content */}
+              <div className="text-white space-y-6">
+                <div className="space-y-4">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                    <span className="block text-orange-400 font-devanagari">
+                      Welcome to
+                    </span>
+                    <span className="block text-white font-devanagari">
+                      Kaali Mandir
+                    </span>
+                  </h1>
+                  <p className="text-xl text-gray-200">
+                    Your Temple, Anytime, Anywhere
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <Link
+                      to="/pujas"
+                      className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    >
+                      Book Puja
+                    </Link>
+                    <Link
+                      to="/donations"
+                      className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 bg-white/10 backdrop-blur-sm"
+                    >
+                      Make Donation
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Floating Jai Maa Kali text in top right */}
+        {/* <div className="absolute top-8 right-8 bg-black/60 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/50">
+          <span className="text-orange-400 text-lg font-semibold">
+            🙏 Jai Maa Kali 🙏
+          </span>
+        </div> */}
+
+        {/* Decorative elements */}
+        {/* <div className="absolute bottom-8 right-8">
+          <div className="flex space-x-2">
+            <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse delay-300"></div>
+            <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse delay-600"></div>
+          </div>
+        </div> */}
       </div>
 
       {/* Next Event Countdown */}

@@ -14,6 +14,7 @@ import BhagavadGita from "./pages/BhagavadGita";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import EventManagement from "./pages/Admin/EventManagement";
 import DonationManagement from "./pages/Admin/DonationManagement";
+import PujaBooking from "./pages/PujaBooking";
 import { AuthProvider } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import PrivateRoute from "./component/PrivateRoute";
@@ -30,6 +31,7 @@ function App() {
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/pujas" element={<PujaBooking />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/literature" element={<Literature />} />
                 <Route path="/literature/mahabharat" element={<Mahabharat />} />
