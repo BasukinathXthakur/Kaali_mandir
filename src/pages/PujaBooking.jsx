@@ -34,7 +34,8 @@ const PujaBooking = () => {
       id: 1,
       name: "9wav Durga Puja",
       hindiName: "नवरात्रि दुर्गा पूजा",
-      description: "Nine-day Durga Puja with complete rituals and ceremonies",
+      description:
+        "Nine-day Durga Puja with complete rituals and ceremonies. Celebrate Navratri with the daily worship of 9 goddesses to receive blessings of protection, prosperity, harmony and divine strength Celebrate Navratri with the daily worship of 9 goddesses to receive blessings of protection, prosperity, harmony and divine strength! From Pratipada to Navami Tithi (22 September to 1 October 2025)",
       hindiDescription:
         "नौ दिनों तक दुर्गा पूजा के साथ पूर्ण अनुष्ठान और समारोह",
       icon: <Star className="w-8 h-8" />,

@@ -116,6 +116,13 @@ export default function Navbar() {
                   {t("home.bookPujaChadhava")}
                 </Link>
                 <Link
+                  to="/prashad"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Heart className="mr-3 text-orange-600" /> Prashad Booking
+                </Link>
+                <Link
                   to="/panchang"
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   onClick={() => setServicesOpen(false)}
@@ -158,6 +165,13 @@ export default function Navbar() {
             {t("navbar.events")}
           </Link>
           <Link
+            to="/gallery"
+            onClick={() => setServicesOpen(false)}
+            className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+          >
+            Gallery
+          </Link>
+          <Link
             to="/yatra"
             onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
@@ -169,7 +183,7 @@ export default function Navbar() {
             onClick={() => setServicesOpen(false)}
             className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
           >
-            {t("navbar.community")}
+            {t("home.sanataniCommunity")}
           </Link>
           <Link
             to="/donations"

@@ -9,6 +9,9 @@ dotenv.config();
 import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/events.js";
 import donationRoutes from "./routes/donations.js";
+import prashadRoutes from "./routes/prashad.js";
+import communityRoutes from "./routes/community.js";
+import galleryRoutes from "./routes/gallery.js";
 
 dotenv.config();
 
@@ -31,6 +34,9 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/donations", donationRoutes);
+app.use("/api/prashad", prashadRoutes);
+app.use("/api/community", communityRoutes);
+app.use("/api/gallery", galleryRoutes);
 
 const PORT = process.env.PORT || 5000;
 

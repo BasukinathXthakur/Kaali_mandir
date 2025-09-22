@@ -41,32 +41,47 @@ const Footer = () => {
             <p className="text-gray-300 mb-4">{t("footer.footerAbout")}</p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.facebook.com/JagatKaaliMandir"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-300 transition-colors"
+                title="Facebook - Jagat Kaali Mandir"
               >
                 <FaFacebook size={20} />
               </a>
               <a
-                href="#"
+                href="https://x.com/JagatKaliMandir"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-300 transition-colors"
+                title="Twitter - @JagatKaliMandir"
               >
                 <FaTwitter size={20} />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/jagat_kaali_mandir"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-300 transition-colors"
+                title="Instagram - jagat_kaali_mandir"
               >
                 <FaInstagram size={20} />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@JagatKaali_Mandir"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-300 transition-colors"
+                title="YouTube - @JagatKaali_Mandir"
               >
                 <FaYoutube size={20} />
               </a>
               <a
-                href="#"
+                href="https://wa.me/919334223837"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-300 transition-colors"
+                title="WhatsApp - 9334223837"
               >
                 <FaWhatsapp size={20} />
               </a>
@@ -97,19 +112,19 @@ const Footer = () => {
               </li>
               <li>
                 <Link
+                  to="/gallery"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {t("footer.gallery")}
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/donations"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   {t("navbar.donations")}
                 </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  {t("footer.gallery")}
-                </a>
               </li>
             </ul>
           </div>
@@ -163,16 +178,22 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center space-x-2">
                 <FaPhone className="text-gray-400" />
-                <span className="text-gray-400">+91 98765 43210</span>
+                <span className="text-gray-400">9334223837</span>
               </li>
               <li className="flex items-center space-x-2">
                 <FaEnvelope className="text-gray-400" />
-                <span className="text-gray-400">info@kaalimandir.com</span>
+                <span className="text-gray-400">
+                  jagatkaalimandir@gmail.com
+                </span>
               </li>
               <li className="flex items-start space-x-2">
                 <FaMapMarkerAlt className="text-gray-400 mt-1" />
                 <span className="text-gray-400">
-                  123 Temple Street, Spiritual City, India - 110001
+                  Jagat Kaali Mandir
+                  <br />
+                  Latitude: 26.342225
+                  <br />
+                  Longitude: 86.004515
                 </span>
               </li>
             </ul>
