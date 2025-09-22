@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './authService';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://kaali-mandir.vercel.app/api';
 
 // Configure axios with auth token
 const authAxios = () => {
