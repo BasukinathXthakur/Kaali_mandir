@@ -8,9 +8,9 @@
     "lint": "eslint .",
     "dev": "vite",
     "preview": "vite preview",
-    "server": "nodemon server/index.js",
+    "server": "nodemon api/index.js",
     "start:all": "concurrently \"npm run dev\" \"npm run start:server\"",
-    "start:server": "node server/index.js"
+    "start:server": "node api/index.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.27.0",
