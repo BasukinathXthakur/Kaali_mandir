@@ -1,4 +1,5 @@
 import express from "express";
+import serverless from "serverless-http";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
@@ -40,9 +41,12 @@ app.use("/api/prashad", prashadRoutes);
 app.use("/api/community", communityRoutes);
 app.use("/api/gallery", galleryRoutes);
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+//   console.log(`http://localhost:${PORT}`);
+// });
+
+// 👇 Export handler for Vercel serverless function
+export const handler = serverless(app);

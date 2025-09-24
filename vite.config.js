@@ -17,4 +17,9 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
   },
+   server: {
+    proxy: {
+      '/api': 'http://localhost:5000', // if testing locally
+    },
+  },
 });
