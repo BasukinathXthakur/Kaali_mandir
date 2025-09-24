@@ -4,7 +4,11 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "../server/services/mongodb.js";
-dotenv.config();
+dotenv.config(
+  {
+    path: path.resolve(process.cwd(), ".env"),
+  }
+);
 // Import routes
 import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/events.js";
@@ -12,8 +16,6 @@ import donationRoutes from "./routes/donations.js";
 import prashadRoutes from "./routes/prashad.js";
 import communityRoutes from "./routes/community.js";
 import galleryRoutes from "./routes/gallery.js";
-
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
