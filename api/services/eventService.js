@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './authService';
 
-const API_URL = 'https://kaali-mandir.onrender.com/api';
+const API_URL = '/api';
 
 // Configure axios with auth token
 const authAxios = () => {

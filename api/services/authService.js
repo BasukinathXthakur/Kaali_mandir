@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://kaali-mandir.onrender.com/api';
+const API_URL = '/api';
 
 // Register a new user
 export const registerUser = async (name, email, password, phone) => {
