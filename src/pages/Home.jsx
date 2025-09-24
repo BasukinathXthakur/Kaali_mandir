@@ -12,7 +12,7 @@ import {
   HandHeart,
   Clock,
 } from "lucide-react";
-import { db } from "../../server/services/firebase";
+import { db } from "../../api/services/firebase";
 import {
   collection,
   query,

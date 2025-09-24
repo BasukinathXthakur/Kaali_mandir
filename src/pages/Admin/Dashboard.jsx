@@ -6,7 +6,7 @@ import {
   FaUsers,
   FaChartLine,
 } from "react-icons/fa";
-import { db } from "../../../server/services/firebase";
+import { db } from "../../../api/services/firebase";
 import {
   collection,
   query,

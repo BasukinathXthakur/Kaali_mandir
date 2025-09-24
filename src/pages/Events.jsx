@@ -6,7 +6,7 @@ import {
   FaMapMarkerAlt,
   FaRupeeSign,
 } from "react-icons/fa";
-import { getEvents } from "../../server/services/eventService";
+import { getEvents } from "../../api/services/eventService";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../hooks/useLanguage";
 

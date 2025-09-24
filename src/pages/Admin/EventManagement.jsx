@@ -9,7 +9,7 @@ import {
   FaMapMarkerAlt,
   FaRupeeSign,
 } from "react-icons/fa";
-import { db } from "../../../server/services/firebase";
+import { db } from "../../../api/services/firebase";
 import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/events"; // Backend API URL
