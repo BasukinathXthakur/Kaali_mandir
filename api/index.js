@@ -1,5 +1,4 @@
 import express from "express";
-import serverless from "serverless-http";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
@@ -26,15 +25,17 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// CORS configuration to allow frontend domain
+// CORS configuration to allow frontend domain. Prefer environment variable if set.
 const allowedOrigins = [
-  'https://kaali-mandir.onrender.com',
-  'http://localhost:3000', // for local dev, remove if not needed
-];
+  process.env.FRONTEND_URL, // e.g. https://kaali-mandir.onrender.com
+  'http://localhost:4173', // for local dev
+  'http://localhost:5173', 
+].filter(Boolean);
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
+  // allow requests with no origin (like curl, mobile apps, server-to-server)
+  if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
@@ -63,6 +64,11 @@ app.use("/api/prashad", prashadRoutes);
 app.use("/api/community", communityRoutes);
 app.use("/api/gallery", galleryRoutes);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime(), timestamp: Date.now() });
+});
+
 // Serve frontend for all non-API routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
@@ -77,6 +83,3 @@ if (process.env.NODE_ENV !== 'serverless') {
     console.log(`http://0.0.0.0:${PORT}`);
   });
 }
-
-// 👇 Export handler for Vercel serverless function
-export const handler = serverless(app);

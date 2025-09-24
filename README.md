@@ -93,3 +93,26 @@ A modern web application for managing temple events, donations, and administrati
    - Check Firebase configuration
    - Verify internet connection for Firebase queries
    - Check browser console for errors
+
+## Deploying on Render
+
+If you deploy the backend (and optionally the frontend) to Render, set the following environment variables in your Render service settings:
+
+- `PORT` - (optional) port for your server (Render sets this automatically)
+- `MONGODB_URI` - your MongoDB connection string
+- `JWT_SECRET` - secret key for signing JWTs
+- `FRONTEND_URL` - the URL where your frontend is hosted (e.g. `https://kaali-mandir.onrender.com`). This value is used by the backend to configure CORS.
+
+Steps on Render:
+
+1. Create a new Web Service and connect your GitHub repo.
+2. In the Service settings → Environment, add the variables above.
+3. Set the Start Command to:
+
+```
+node api/index.js
+```
+
+4. Deploy and monitor the logs. You can verify the backend is live by visiting `https://your-service.onrender.com/health`.
+
+Note: If you serve both frontend and backend from the same Render service (by building the frontend into `dist` and serving static files), ensure `FRONTEND_URL` is set to your public domain or leave it unset to allow same-origin requests.

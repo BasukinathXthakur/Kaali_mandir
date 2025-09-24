@@ -12,7 +12,7 @@ import {
 import { db } from "../../../api/services/firebase";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/events"; // Backend API URL
+const API_URL = "/api/events"; // Use relative path for same-origin
 
 const EventManagement = () => {
   const [events, setEvents] = useState([]);
