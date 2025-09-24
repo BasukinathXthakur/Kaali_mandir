@@ -19,6 +19,7 @@ import { useLanguage } from "../hooks/useLanguage";
 const PujaBooking = () => {
   const { t } = useLanguage();
   const [selectedPuja, setSelectedPuja] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
@@ -35,9 +36,10 @@ const PujaBooking = () => {
       name: "9wav Durga Puja",
       hindiName: "नवरात्रि दुर्गा पूजा",
       description:
-        "Nine-day Durga Puja with complete rituals and ceremonies. Celebrate Navratri with the daily worship of 9 goddesses to receive blessings of protection, prosperity, harmony and divine strength Celebrate Navratri with the daily worship of 9 goddesses to receive blessings of protection, prosperity, harmony and divine strength! From Pratipada to Navami Tithi (22 September to 1 October 2025)",
+        "Nine-day Durga Puja with complete rituals and ceremonies. Celebrate Navratri with the daily worship of 9 goddesses to receive blessings of protection, prosperity, harmony and divine strength! From Pratipada to Navami Tithi (22 September to 1 October 2025)",
       hindiDescription:
         "नौ दिनों तक दुर्गा पूजा के साथ पूर्ण अनुष्ठान और समारोह",
+      logo: "/durgaMaaLogo.jpeg",
       icon: <Star className="w-8 h-8" />,
       color: "from-red-500 to-pink-500",
       bgColor: "bg-red-50",
@@ -58,6 +60,7 @@ const PujaBooking = () => {
       hindiName: "सरस्वती पूजा",
       description: "Goddess of Knowledge and Wisdom worship ceremony",
       hindiDescription: "ज्ञान और बुद्धि की देवी की पूजा समारोह",
+      logo: "/SarsawatiLogo.jpeg",
       icon: <BookOpen className="w-8 h-8" />,
       color: "from-yellow-500 to-orange-500",
       bgColor: "bg-yellow-50",
@@ -78,6 +81,7 @@ const PujaBooking = () => {
       hindiName: "छठ पूजा",
       description: "Four-day Sun God worship festival",
       hindiDescription: "चार दिनों का सूर्य देवता पूजा उत्सव",
+      logo: "/chhatLogo.jpeg",
       icon: <Sun className="w-8 h-8" />,
       color: "from-orange-500 to-red-500",
       bgColor: "bg-orange-50",
@@ -94,10 +98,74 @@ const PujaBooking = () => {
     },
     {
       id: 4,
+      name: "Laxmi Pujan",
+      hindiName: "लक्ष्मी पूजन",
+      description: "Goddess Lakshmi worship for wealth and prosperity",
+      hindiDescription: "धन और समृद्धि के लिए देवी लक्ष्मी की पूजा",
+      logo: "/durgaMaaLogo.jpeg", // Using durga logo as placeholder for Laxmi
+      icon: <Star className="w-8 h-8" />,
+      color: "from-pink-500 to-rose-500",
+      bgColor: "bg-pink-50",
+      borderColor: "border-pink-200",
+      price: "₹2,100",
+      duration: "1 Day",
+      features: [
+        "Lakshmi Aarti",
+        "Wealth Mantras",
+        "Gold Coin Offering",
+        "Prosperity Blessings",
+        "Sacred Prasad",
+      ],
+    },
+    {
+      id: 5,
+      name: "Griha Pujan",
+      hindiName: "गृह पूजन",
+      description: "House warming and blessing ceremony",
+      hindiDescription: "घर की शुद्धता और आशीर्वाद समारोह",
+      logo: "/bhumiPujanLogo.jpeg",
+      icon: <Flame className="w-8 h-8" />,
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+      price: "₹2,100",
+      duration: "1 Day",
+      features: [
+        "Vastu Shanti",
+        "Home Blessing",
+        "Ganesh Puja",
+        "Sacred Fire Ceremony",
+        "Prosperity Mantras",
+      ],
+    },
+    {
+      id: 6,
+      name: "Mahadev Puja",
+      hindiName: "महादेव पूजा",
+      description: "Lord Shiva worship for spiritual enlightenment",
+      hindiDescription: "आध्यात्मिक ज्ञान के लिए भगवान शिव की पूजा",
+      logo: "/sankar.jpeg",
+      icon: <Zap className="w-8 h-8" />,
+      color: "from-blue-500 to-indigo-500",
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+      price: "₹2,100",
+      duration: "1 Day",
+      features: [
+        "Rudra Abhishek",
+        "Om Namah Shivaya Chanting",
+        "Bilva Patra Offering",
+        "Shiva Mantras",
+        "Sacred Prasad",
+      ],
+    },
+    {
+      id: 7,
       name: "Pitra Santi Sardha Karam Puja",
       hindiName: "पितृ शांति श्राद्ध कर्म पूजा",
       description: "Ancestral peace and remembrance ceremony",
       hindiDescription: "पूर्वजों की शांति और स्मरण समारोह",
+      logo: "pitaDosh.jpeg",
       icon: <Moon className="w-8 h-8" />,
       color: "from-purple-500 to-indigo-500",
       bgColor: "bg-purple-50",
@@ -113,15 +181,16 @@ const PujaBooking = () => {
       ],
     },
     {
-      id: 5,
+      id: 8,
       name: "Satyanarayan Bhagwan Puja with Hawan",
       hindiName: "सत्यनारायण भगवान पूजा हवन के साथ",
       description: "Lord Satyanarayan worship with sacred fire ceremony",
       hindiDescription: "पवित्र अग्नि समारोह के साथ भगवान सत्यनारायण की पूजा",
+      logo: "satnarayanBhagwanLogo.jpg", // Using hanuman as placeholder
       icon: <Flame className="w-8 h-8" />,
-      color: "from-blue-500 to-cyan-500",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
+      color: "from-orange-500 to-red-500",
+      bgColor: "bg-orange-50",
+      borderColor: "border-orange-200",
       price: "₹7,000",
       duration: "1 Day",
       features: [
@@ -188,12 +257,28 @@ const PujaBooking = () => {
                 className={`${puja.bgColor} ${puja.borderColor} border-2 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer`}
                 onClick={() => setSelectedPuja(puja)}
               >
-                {/* Icon and Header */}
+                {/* Logo and Header */}
                 <div className="text-center mb-6">
-                  <div
-                    className={`w-16 h-16 mx-auto rounded-full bg-gradient-to-r ${puja.color} text-white flex items-center justify-center mb-4`}
-                  >
-                    {puja.icon}
+                  <div className="w-20 h-20 mx-auto rounded-full overflow-hidden mb-4 shadow-lg relative">
+                    {!imageErrors[puja.id] ? (
+                      <img
+                        src={puja.logo}
+                        alt={puja.name}
+                        className="w-full h-full object-cover"
+                        onError={() => {
+                          setImageErrors((prev) => ({
+                            ...prev,
+                            [puja.id]: true,
+                          }));
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className={`w-full h-full bg-gradient-to-r ${puja.color} text-white flex items-center justify-center`}
+                      >
+                        {puja.icon}
+                      </div>
+                    )}
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-2">
                     {puja.name}
@@ -451,37 +536,6 @@ const PujaBooking = () => {
           </div>
         </div>
       )}
-
-      {/* Contact Information */}
-      <div className="bg-gray-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4">
-              {t("pujaBooking.needHelp")}
-            </h3>
-            <p className="text-gray-300">
-              {t("pujaBooking.contactUsQuestions")}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <Phone className="w-8 h-8 mx-auto mb-2 text-orange-500" />
-              <h4 className="font-semibold mb-1">{t("pujaBooking.phone")}</h4>
-              <p className="text-gray-300">+91 98765 43210</p>
-            </div>
-            <div>
-              <Mail className="w-8 h-8 mx-auto mb-2 text-orange-500" />
-              <h4 className="font-semibold mb-1">{t("pujaBooking.email")}</h4>
-              <p className="text-gray-300">info@kaalimandir.com</p>
-            </div>
-            <div>
-              <MapPin className="w-8 h-8 mx-auto mb-2 text-orange-500" />
-              <h4 className="font-semibold mb-1">{t("pujaBooking.address")}</h4>
-              <p className="text-gray-300">Kaali Mandir, Sacred City</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

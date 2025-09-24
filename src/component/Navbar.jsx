@@ -112,8 +112,14 @@ export default function Navbar() {
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   onClick={() => setServicesOpen(false)}
                 >
-                  <Heart className="mr-3 text-orange-600" />{" "}
-                  {t("home.bookPujaChadhava")}
+                  <Heart className="mr-3 text-orange-600" /> Puja Booking
+                </Link>
+                <Link
+                  to="/chhadava"
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <Heart className="mr-3 text-orange-600" /> Chhadava Service
                 </Link>
                 <Link
                   to="/prashad"
