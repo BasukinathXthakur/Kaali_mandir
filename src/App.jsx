@@ -10,6 +10,7 @@ import Literature from "./pages/Literature";
 import AartiDetail from "./pages/AartiDetail";
 import PujaBooking from "./pages/PujaBooking";
 import PrashadBooking from "./pages/PrashadBooking";
+import Chhadava from "./pages/Chhadava";
 import Gallery from "./pages/Gallery";
 import Community from "./pages/Community";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -49,6 +50,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/pujas" element={<PujaBooking />} />
                   <Route path="/prashad" element={<PrashadBooking />} />
+                  <Route path="/chhadava" element={<Chhadava />} />
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/community" element={<Community />} />
                   <Route path="/events" element={<Events />} />
